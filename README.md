@@ -1,6 +1,9 @@
 react-date-picker
 =================
 
+## Please note:
+This is not the official repo. I created this repo because the official repo at [zippyui/react-date-picker](https://github.com/zippyui/react-date-picker) disappeared (the whole organisation did so).
+
 <!-- [![Circle CI](https://circleci.com/gh/zippyui/react-date-picker/tree/master.svg?style=svg)](https://circleci.com/gh/zippyui/react-date-picker/tree/master) -->
 
 <img src="http://npm.packagequality.com/badge/react-date-picker.png"/>
