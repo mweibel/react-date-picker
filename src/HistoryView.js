@@ -33,22 +33,21 @@ import DecadeView, {
 } from './DecadeView'
 
 export default class HistoryView extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = getInitialState(props)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.unmounted = true
   }
 
-  toMoment(date, format) {
+  toMoment (date, format) {
     return toMoment(date, format, this.props)
   }
 
-  render() {
+  render () {
     const dateProps = prepareDateProps(this.props, this.state)
 
     const props = this.p = assign({}, this.props, dateProps)
@@ -113,15 +112,14 @@ export default class HistoryView extends Component {
 
     delete flexProps.viewMoment
 
-    if (typeof props.cleanup == 'function') {
+    if (typeof props.cleanup === 'function') {
       props.cleanup(flexProps)
     }
-
 
     return <Flex
       inline
       column
-      alignItems="stretch"
+      alignItems='stretch'
       {...flexProps}
       className={className}
     >
@@ -131,7 +129,7 @@ export default class HistoryView extends Component {
     </Flex>
   }
 
-  renderFooter() {
+  renderFooter () {
     const props = this.p
     const children = props.children
 
@@ -169,7 +167,7 @@ export default class HistoryView extends Component {
     />
   }
 
-  onOkClick() {
+  onOkClick () {
     if (this.props.onOkClick) {
       const dateMoment = this.p.activeMoment
       const dateString = this.format(dateMoment)
@@ -179,23 +177,22 @@ export default class HistoryView extends Component {
     }
   }
 
-  onCancelClick() {
+  onCancelClick () {
     if (this.props.onCancelClick) {
       this.props.onCancelClick()
     }
   }
 
-  renderYearView(yearViewProps) {
+  renderYearView (yearViewProps) {
     const props = this.p
     const children = props.children
 
     const yearViewChild = children.filter(c => c && c.props && c.props.isYearView)[0]
     const yearViewChildProps = yearViewChild ? yearViewChild.props : {}
 
-    const tabIndex = yearViewChildProps.tabIndex == null ?
-      null
-      :
-      yearViewChildProps.tabIndex
+    const tabIndex = yearViewChildProps.tabIndex == null
+      ? null
+      : yearViewChildProps.tabIndex
 
     yearViewProps.tabIndex = tabIndex
 
@@ -228,17 +225,16 @@ export default class HistoryView extends Component {
     return <YearView {...yearViewProps} />
   }
 
-  renderDecadeView(decadeViewProps) {
+  renderDecadeView (decadeViewProps) {
     const props = this.p
     const children = props.children
     const decadeViewChild = children.filter(c => c && c.props && c.props.isDecadeView)[0]
 
     const decadeViewChildProps = decadeViewChild ? decadeViewChild.props : {}
 
-    const tabIndex = decadeViewChildProps.tabIndex == null ?
-      null
-      :
-      decadeViewChildProps.tabIndex
+    const tabIndex = decadeViewChildProps.tabIndex == null
+      ? null
+      : decadeViewChildProps.tabIndex
 
     decadeViewProps.tabIndex = tabIndex
 
@@ -273,41 +269,41 @@ export default class HistoryView extends Component {
     return <DecadeView {...decadeViewProps} />
   }
 
-  onYearViewFocus() {
+  onYearViewFocus () {
     if (this.props.focusYearView === false) {
       this.focus()
     }
   }
 
-  focus() {
+  focus () {
     if (this.decadeView && this.props.focusDecadeView) {
       this.decadeView.focus()
     }
   }
 
-  onYearViewMouseDown(e) {
+  onYearViewMouseDown (e) {
     preventDefault(e)
 
     this.focus()
   }
 
-  onDecadeViewMouseDown(e) {
+  onDecadeViewMouseDown (e) {
     preventDefault(e)
   }
 
-  format(mom, format) {
+  format (mom, format) {
     format = format || this.props.dateFormat
 
     return mom.format(format)
   }
 
-  handleDecadeViewOnConfirm() {
+  handleDecadeViewOnConfirm () {
     if (this.props.okOnEnter) {
       this.onOkClick()
     }
   }
 
-  onKeyDown(event) {
+  onKeyDown (event) {
     if (event.key == 'Escape') {
       return this.onCancelClick()
     }
@@ -319,19 +315,19 @@ export default class HistoryView extends Component {
     return undefined
   }
 
-  confirm(date, event) {
+  confirm (date, event) {
     return confirm.call(this, date, event)
   }
 
-  navigate(direction, event) {
+  navigate (direction, event) {
     return navigate.call(this, direction, event)
   }
 
-  select({ dateMoment, timestamp }, event) {
+  select ({ dateMoment, timestamp }, event) {
     return select.call(this, { dateMoment, timestamp }, event)
   }
 
-  handleDecadeOnViewDateChange(dateString, { dateMoment, timestamp }) {
+  handleDecadeOnViewDateChange (dateString, { dateMoment, timestamp }) {
     const props = this.p
     const currentViewMoment = props.viewMoment
 
@@ -344,7 +340,7 @@ export default class HistoryView extends Component {
     this.onViewDateChange(dateString, { dateMoment, timestamp })
   }
 
-  handleDecadeOnActiveDateChange(dateString, { dateMoment, timestamp }) {
+  handleDecadeOnActiveDateChange (dateString, { dateMoment, timestamp }) {
     const props = this.p
     const currentViewMoment = props.viewMoment
 
@@ -357,7 +353,7 @@ export default class HistoryView extends Component {
     this.onActiveDateChange(dateString, { dateMoment, timestamp })
   }
 
-  handleDecadeOnChange(dateString, { dateMoment, timestamp }, event) {
+  handleDecadeOnChange (dateString, { dateMoment, timestamp }, event) {
     const props = this.p
     const currentViewMoment = props.viewMoment
 
@@ -370,7 +366,7 @@ export default class HistoryView extends Component {
     this.onChange(dateString, { dateMoment, timestamp }, event)
   }
 
-  handleYearViewOnChange(dateString, { dateMoment, timestamp }, event) {
+  handleYearViewOnChange (dateString, { dateMoment, timestamp }, event) {
     const props = this.p
     const currentMoment = props.moment
 
@@ -383,19 +379,19 @@ export default class HistoryView extends Component {
     this.onChange(dateString, { dateMoment, timestamp }, event)
   }
 
-  onViewDateChange(dateString, { dateMoment, timestamp }) {
+  onViewDateChange (dateString, { dateMoment, timestamp }) {
     return onViewDateChange.call(this, { dateMoment, timestamp })
   }
 
-  gotoViewDate({ dateMoment, timestamp }) {
+  gotoViewDate ({ dateMoment, timestamp }) {
     return gotoViewDate.call(this, { dateMoment, timestamp })
   }
 
-  onActiveDateChange(dateString, { dateMoment, timestamp }) {
+  onActiveDateChange (dateString, { dateMoment, timestamp }) {
     return onActiveDateChange.call(this, { dateMoment, timestamp })
   }
 
-  onChange(dateString, { dateMoment, timestamp }, event) {
+  onChange (dateString, { dateMoment, timestamp }, event) {
     return onChange.call(this, { dateMoment, timestamp }, event)
   }
 }

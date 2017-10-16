@@ -15,15 +15,15 @@ const f = (mom, format) => toMoment(mom).format(format)
 
 export default {
 
-  day(mom, format) {
+  day (mom, format) {
     return f(mom, format || CONFIG.dayFormat)
   },
 
-  month(mom, format) {
+  month (mom, format) {
     return f(mom, format || CONFIG.monthFormat)
   },
 
-  year(mom, format) {
+  year (mom, format) {
     return f(mom, format || CONFIG.yearFormat)
   }
 }

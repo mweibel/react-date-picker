@@ -31,25 +31,24 @@ const getValueOnDelete = ({ oldValue, range, key, separator, meridiem }) => {
 
   let value
 
-  if (selectedValue){
-
+  if (selectedValue) {
     const replacement = selectedValue.split('')
-                          .map(c => {
-                            if (c == separator || c == ' '){
-                              return c
-                            }
+      .map(c => {
+        if (c == separator || c == ' ') {
+          return c
+        }
 
-                            if (meridiem && (c * 1 != c)){
-                              return c == 'p'?
-                                'a':
-                                c == 'P'?
-                                  'A':
-                                  c
-                            }
+        if (meridiem && (c * 1 != c)) {
+          return c == 'p'
+            ? 'a'
+            : c == 'P'
+              ? 'A'
+              : c
+        }
 
-                            return 0
-                          })
-                          .join('')
+        return 0
+      })
+      .join('')
 
     value = replaceBetween({ value: oldValue, start, end, str: replacement })
 
@@ -58,14 +57,12 @@ const getValueOnDelete = ({ oldValue, range, key, separator, meridiem }) => {
       update: value != oldValue,
       caretPos: key == 'Backspace' ? start : end
     }
-
   } else {
-
     const back = key == 'Backspace'
-    const index = start + (back? -1: 0)
-    const caretPos = start + (back? -1: 1)
+    const index = start + (back ? -1 : 0)
+    const caretPos = start + (back ? -1 : 1)
 
-    if (index < 0){
+    if (index < 0) {
       return {
         value: oldValue,
         update: false
@@ -76,16 +73,16 @@ const getValueOnDelete = ({ oldValue, range, key, separator, meridiem }) => {
 
     value = oldValue
 
-    let replacement = char == separator || char == ' '?
-                        char:
-                        0
+    let replacement = char == separator || char == ' '
+      ? char
+      : 0
 
-    if (char && char * 1 != char && replacement === 0 && meridiem){
-      if (char == 'p'){
+    if (char && char * 1 != char && replacement === 0 && meridiem) {
+      if (char == 'p') {
         replacement = 'a'
-      } else if (char == 'P'){
+      } else if (char == 'P') {
         replacement = 'A'
-      } else if (char == 'M' || char == 'm' || char == 'a' || char == 'A'){
+      } else if (char == 'M' || char == 'm' || char == 'a' || char == 'A') {
         replacement = char
       }
     }
@@ -122,17 +119,16 @@ const TIME_PARTS = {
 
 const getActiveTimePartIndex = ({ value, timeValue, separator, range, hours24, meridiem }) => {
   const { start } = range
-  const timeParts = TIME_PARTS[hours24? 24: 12]
+  const timeParts = TIME_PARTS[hours24 ? 24 : 12]
 
   let partIndex = 0
   let currentPart
 
-  while (currentPart = timeParts[partIndex]){
-
-    if (currentPart.name == 'seconds' && timeValue && !timeValue.seconds){
-      return 4 //the index of the meridiem
+  while (currentPart = timeParts[partIndex]) {
+    if (currentPart.name == 'seconds' && timeValue && !timeValue.seconds) {
+      return 4 // the index of the meridiem
     }
-    if (start >= currentPart.start && start <= currentPart.end){
+    if (start >= currentPart.start && start <= currentPart.end) {
       return partIndex
     }
 
@@ -143,19 +139,18 @@ const getActiveTimePartIndex = ({ value, timeValue, separator, range, hours24, m
 }
 
 const getTimePartAt = (index, { hours24 }) => {
-  return assign({}, TIME_PARTS[hours24? 24:12][index])
+  return assign({}, TIME_PARTS[hours24 ? 24 : 12][index])
 }
 
 const getActiveTimePart = ({ value, timeValue, separator, range, hours24, meridiem }) => {
-
   const index = getActiveTimePartIndex({ value, timeValue, separator, range, hours24 })
 
-  if (index == 4 && meridiem){
+  if (index == 4 && meridiem) {
     const timePart = {
       start: 6, end: 8, name: 'meridiem'
     }
 
-    if (timeValue.seconds){
+    if (timeValue.seconds) {
       timePart.start += 3
       timePart.end += 3
     }
@@ -174,7 +169,7 @@ const getValueOnDirection = ({ oldValue, range, separator, dir, incrementNext, c
   const timeValue = toTimeValue({ value: oldValue, separator, meridiem })
   const activeTimePart = getActiveTimePart({ value: oldValue, timeValue, separator, range, hours24, meridiem })
 
-  if (activeTimePart.name != 'meridiem'){
+  if (activeTimePart.name != 'meridiem') {
     timeValue[activeTimePart.name] = dir + timeValue[activeTimePart.name] * 1
   }
 
@@ -185,42 +180,40 @@ const getValueOnDirection = ({ oldValue, range, separator, dir, incrementNext, c
   hours *= 1
   minutes *= 1
 
-  if (seconds){
+  if (seconds) {
     seconds *= 1
   }
 
-  if (activeTimePart.name != 'meridiem'){
-
-    if (seconds && (seconds > 59 || seconds < 0)){
-
-      if (propagate){
-        minutes += seconds > 59? 1: -1
+  if (activeTimePart.name != 'meridiem') {
+    if (seconds && (seconds > 59 || seconds < 0)) {
+      if (propagate) {
+        minutes += seconds > 59 ? 1 : -1
       }
 
-      if (circular){
+      if (circular) {
         seconds %= 60
 
-        if (seconds < 0){
+        if (seconds < 0) {
           seconds = 60 + seconds
         }
       }
     }
 
-    if (minutes && (minutes > 59 || minutes < 0)){
-      if (propagate){
-        hours += minutes > 59? 1: -1
+    if (minutes && (minutes > 59 || minutes < 0)) {
+      if (propagate) {
+        hours += minutes > 59 ? 1 : -1
       }
 
-      if (circular){
+      if (circular) {
         minutes %= 60
 
-        if (minutes < 0){
+        if (minutes < 0) {
           minutes = 60 + minutes
         }
       }
     }
 
-    if (meridiem && circular && (hours > 12 || hours < 1)){
+    if (meridiem && circular && (hours > 12 || hours < 1)) {
       toggleMeridiemValue = true
     }
   }
@@ -228,24 +221,24 @@ const getValueOnDirection = ({ oldValue, range, separator, dir, incrementNext, c
   hours = leftPad(clampHour(hours * 1, { circular, max: activeTimePart.max, min: activeTimePart.min }))
   minutes = leftPad(clampMinute(minutes * 1, { circular }))
 
-  if (seconds != undefined){
+  if (seconds != undefined) {
     seconds = leftPad(clampSecond(seconds * 1, { circular }))
   }
 
   value = hours + separator + minutes
 
-  if (seconds){
+  if (seconds) {
     value += separator + seconds
   }
 
-  if (activeTimePart.name == 'meridiem'){
+  if (activeTimePart.name == 'meridiem') {
     toggleMeridiemValue = true
   }
 
-  if (meridiem){
-    value += ' ' + (toggleMeridiemValue?
-                      toggleMeridiem(timeValue.meridiem):
-                      timeValue.meridiem)
+  if (meridiem) {
+    value += ' ' + (toggleMeridiemValue
+      ? toggleMeridiem(timeValue.meridiem)
+      : timeValue.meridiem)
   }
 
   return {
@@ -259,11 +252,11 @@ const getValueOnNumber = ({ oldValue, num, range, separator, circular, hours24, 
   const activeTimePartIndex = getActiveTimePartIndex({ value: oldValue, separator, range, hours24 })
   let activeTimePart = getTimePartAt(activeTimePartIndex, { hours24 })
 
-  if (activeTimePart && range.start == range.end && activeTimePart.end == range.end){
+  if (activeTimePart && range.start == range.end && activeTimePart.end == range.end) {
     activeTimePart = getTimePartAt(activeTimePartIndex + 1, { hours24 })
   }
 
-  if (!activeTimePart){
+  if (!activeTimePart) {
     return {
       value,
       update: false
@@ -277,18 +270,18 @@ const getValueOnNumber = ({ oldValue, num, range, separator, circular, hours24, 
 
   let caretPos
 
-  if (range.start <= activeTimePart.start){
+  if (range.start <= activeTimePart.start) {
     const maxFirstChar = (activeTimePart.max + '').charAt(0) * 1
 
-    caretPos = range.start + (num > maxFirstChar?
-                        3:
-                        range.start < activeTimePart.start?
-                          2:
-                          1
-                      )
-    timeParts[name] = num > maxFirstChar?
-                                      '0' + num:
-                                      num + timeParts[name].charAt(1)
+    caretPos = range.start + (num > maxFirstChar
+      ? 3
+      : range.start < activeTimePart.start
+        ? 2
+        : 1
+    )
+    timeParts[name] = num > maxFirstChar
+      ? '0' + num
+      : num + timeParts[name].charAt(1)
   } else {
     caretPos = range.start + 2
     timeParts[name] = clampNamed(name, replaceAt({ value: timePartValue, index: 1, str: num }) * 1, { circular })
@@ -298,11 +291,11 @@ const getValueOnNumber = ({ oldValue, num, range, separator, circular, hours24, 
 
   let value = hours + separator + minutes
 
-  if (seconds){
+  if (seconds) {
     value += separator + seconds
   }
 
-  if (meridiem){
+  if (meridiem) {
     value += ' ' + timeParts.meridiem
   }
 
@@ -311,16 +304,14 @@ const getValueOnNumber = ({ oldValue, num, range, separator, circular, hours24, 
     caretPos,
     update: true
   }
-
 }
 
-export default function({ oldValue, range, event, separator = ':', incrementNext, circular, propagate, hours24, meridiem }){
-
+export default function ({ oldValue, range, event, separator = ':', incrementNext, circular, propagate, hours24, meridiem }) {
   const newChar = String.fromCharCode(event.which)
   const { start, end } = range
   const { key } = event
 
-  if (key == 'Delete' || key == 'Backspace'){
+  if (key == 'Delete' || key == 'Backspace') {
     return getValueOnDelete({
       key,
       oldValue,
@@ -332,7 +323,7 @@ export default function({ oldValue, range, event, separator = ':', incrementNext
 
   const dir = ARROWS[key]
 
-  if (dir){
+  if (dir) {
     return getValueOnDirection({
       hours24,
       meridiem,
@@ -346,7 +337,7 @@ export default function({ oldValue, range, event, separator = ':', incrementNext
     })
   }
 
-  if (key == 'Unidentified' && newChar * 1 == newChar){
+  if (key == 'Unidentified' && newChar * 1 == newChar) {
     return getValueOnNumber({
       num: newChar * 1,
       circular,

@@ -73,7 +73,7 @@ const handleUnidentified = (format, { event, currentValue, range }) => {
   if (newChar * 1 != newChar) {
     return {
       preventDefault: false,
-      value: currentValue,
+      value: currentValue
       // caretPos
     }
   }
@@ -255,7 +255,9 @@ const getFormats = () => {
     // },
     HH: {
       time: true,
-      min: 0, max: 23, default: '00',
+      min: 0,
+      max: 23,
+      default: '00',
       handleDelete,
       handleBackspace,
       handleUnidentified: handleUnidentifiedLeftPad,
@@ -269,7 +271,9 @@ const getFormats = () => {
     //   handlePageUp: handlePageLeftPad,
     //   handlePageDown: handlePageLeftPad
     // },
-    hh: { min: 1, max: 12, default: '01',
+    hh: { min: 1,
+      max: 12,
+      default: '01',
       time: true,
       handleDelete,
       handleBackspace,
@@ -292,7 +296,8 @@ const getFormats = () => {
     A: {
       length: 2,
       time: true,
-      default: 'AM', upper: true,
+      default: 'AM',
+      upper: true,
       handleArrow: handleMeridiemArrow,
       handlePageUp: handleMeridiemArrow,
       handlePageDown: handleMeridiemArrow,
@@ -301,7 +306,9 @@ const getFormats = () => {
     },
 
     // m: { min: 0, max: 59, default: '0', maxLen: 2 },
-    mm: { min: 0, max: 59, default: '00',
+    mm: { min: 0,
+      max: 59,
+      default: '00',
       time: true,
       handleDelete,
       handleBackspace,
@@ -314,7 +321,9 @@ const getFormats = () => {
     // s: { min: 0, max: 59, default: '0' },
     ss: {
       time: true,
-      min: 0, max: 59, default: '00',
+      min: 0,
+      max: 59,
+      default: '00',
       handleDelete,
       handleBackspace,
       handleUnidentified: handleUnidentifiedLeftPad,

@@ -34,8 +34,7 @@ const joinFunctions = (a, b) => {
 const TRANSITION_DURATION = '0.4s'
 
 export default class TransitionView extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     const child = React.Children.toArray(this.props.children)[0]
@@ -62,7 +61,7 @@ export default class TransitionView extends Component {
     }
   }
 
-  toMoment(value, props) {
+  toMoment (value, props) {
     props = props || this.props
 
     return toMoment(value, {
@@ -71,18 +70,18 @@ export default class TransitionView extends Component {
     })
   }
 
-  format(mom, props) {
+  format (mom, props) {
     props = props || this.props
     return mom.format(props.dateFormat)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.setState({
       rendered: true
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.viewDate) {
       // this is in order to transition when the prop changes
       // if we were to simply do setState({ viewDate }) it wouldn't have had a transition
@@ -90,7 +89,7 @@ export default class TransitionView extends Component {
     }
   }
 
-  transitionTo(date, props) {
+  transitionTo (date, props) {
     props = props || this.props
 
     const dateMoment = this.toMoment(date, props)
@@ -98,12 +97,12 @@ export default class TransitionView extends Component {
     this.doTransition(dateMoment)
   }
 
-  getViewChild() {
+  getViewChild () {
     return React.Children.toArray(this.props.children)
       .filter(c => c && c.props && c.props.isDatePicker)[0]
   }
 
-  prepareChildProps(child, extraProps) {
+  prepareChildProps (child, extraProps) {
     if (this.view) {
       return this.view.p
     }
@@ -113,7 +112,7 @@ export default class TransitionView extends Component {
     return assign({}, child.props, extraProps)
   }
 
-  render() {
+  render () {
     const props = this.props
 
     const child = this.child = this.getViewChild()
@@ -222,9 +221,9 @@ export default class TransitionView extends Component {
     const navBarProps = {
       minDate: props.minDate || renderedChildProps.minDate,
       maxDate: props.maxDate || renderedChildProps.maxDate,
-      enableHistoryView: props.enableHistoryView === undefined ?
-        renderedChildProps.enableHistoryView :
-        props.enableHistoryView,
+      enableHistoryView: props.enableHistoryView === undefined
+        ? renderedChildProps.enableHistoryView
+        : props.enableHistoryView,
       secondary: true,
       viewDate: this.nextViewDate || this.viewDate,
       onViewDateChange,
@@ -264,7 +263,7 @@ export default class TransitionView extends Component {
       column
       inline
       wrap={false}
-      alignItems="stretch"
+      alignItems='stretch'
       {...flexProps}
       className={join(
         props.className,
@@ -282,7 +281,7 @@ export default class TransitionView extends Component {
     </Flex>
   }
 
-  tryNavBarKeyDown(event) {
+  tryNavBarKeyDown (event) {
     if (this.navBar && this.navBar.getHistoryView) {
       const historyView = this.navBar.getHistoryView()
 
@@ -295,7 +294,7 @@ export default class TransitionView extends Component {
     return false
   }
 
-  onKeyDown(event) {
+  onKeyDown (event) {
     const initialKeyDown = this.child.onKeyDown
 
     if (this.tryNavBarKeyDown(event)) {
@@ -307,7 +306,7 @@ export default class TransitionView extends Component {
     }
   }
 
-  isHistoryViewVisible() {
+  isHistoryViewVisible () {
     if (this.navBar && this.navBar.isHistoryViewVisible) {
       return this.navBar.isHistoryViewVisible()
     }
@@ -315,19 +314,19 @@ export default class TransitionView extends Component {
     return false
   }
 
-  showHistoryView() {
+  showHistoryView () {
     if (this.navBar) {
       this.navBar.showHistoryView()
     }
   }
 
-  hideHistoryView() {
+  hideHistoryView () {
     if (this.navBar) {
       this.navBar.hideHistoryView()
     }
   }
 
-  onBlur(event) {
+  onBlur (event) {
     const initialBlur = this.child.onBlur
 
     this.hideHistoryView()
@@ -347,7 +346,7 @@ export default class TransitionView extends Component {
    * @param  {Object} config
    * @return {ReactNode}
    */
-  renderMultiViewNavBar(navBarProps, config) {
+  renderMultiViewNavBar (navBarProps, config) {
     const { index } = config
     const count = this.child.props.perRow
 
@@ -367,7 +366,7 @@ export default class TransitionView extends Component {
     return null
   }
 
-  renderNavBar(navBarProps) {
+  renderNavBar (navBarProps) {
     navBarProps = assign({}, navBarProps)
 
     if (navBarProps.mainNavBar) {
@@ -430,18 +429,18 @@ export default class TransitionView extends Component {
       return <Flex row children={bars} />
     }
 
-    return navBar ?
-      React.cloneElement(navBar, newProps) :
-      <NavBar {...newProps} />
+    return navBar
+      ? React.cloneElement(navBar, newProps)
+      : <NavBar {...newProps} />
   }
 
-  getViewSize() {
-    return this.view && this.view.getViewSize ?
-      this.view.getViewSize() || 1 :
-      1
+  getViewSize () {
+    return this.view && this.view.getViewSize
+      ? this.view.getViewSize() || 1
+      : 1
   }
 
-  renderAt(index, { multiView, navBarProps }) {
+  renderAt (index, { multiView, navBarProps }) {
     if (!this.state.rendered || !this.view) { // || this.state.prepareTransition != -index ) {
       return null
     }
@@ -511,19 +510,19 @@ export default class TransitionView extends Component {
     return React.cloneElement(this.child, newProps)
   }
 
-  getView() {
+  getView () {
     return this.view
   }
 
-  isInView(...args) {
+  isInView (...args) {
     return this.view.isInView(...args)
   }
 
-  onViewDateChange(dateString, { dateMoment }) {
+  onViewDateChange (dateString, { dateMoment }) {
     this.doTransition(dateMoment)
   }
 
-  doTransition(dateMoment) {
+  doTransition (dateMoment) {
     if (this.state.transition) {
       // this.nextViewDate = dateMoment
       return
@@ -552,9 +551,9 @@ export default class TransitionView extends Component {
       }
     }
 
-    const transitionTime = this.props.getTransitionTime ?
-      this.props.getTransitionTime() :
-      null
+    const transitionTime = this.props.getTransitionTime
+      ? this.props.getTransitionTime()
+      : null
 
     this.setState({
       transitionTime,
@@ -577,7 +576,7 @@ export default class TransitionView extends Component {
     })
   }
 
-  addTransitionEnd() {
+  addTransitionEnd () {
     const dom = findDOMNode(this.view)
 
     if (dom) {
@@ -585,7 +584,7 @@ export default class TransitionView extends Component {
     }
   }
 
-  removeTransitionEnd(dom) {
+  removeTransitionEnd (dom) {
     dom = dom || findDOMNode(this.view)
 
     if (dom) {
@@ -593,7 +592,7 @@ export default class TransitionView extends Component {
     }
   }
 
-  onTransitionEnd() {
+  onTransitionEnd () {
     this.removeTransitionEnd()
 
     if (!this.nextViewDate) {
@@ -613,13 +612,13 @@ export default class TransitionView extends Component {
     delete this.nextViewDate
   }
 
-  onNavMouseDown() {
+  onNavMouseDown () {
     if (this.props.focusOnNavMouseDown && !this.isFocused()) {
       this.focus()
     }
   }
 
-  isFocused() {
+  isFocused () {
     const view = this.getView()
 
     if (view) {
@@ -629,7 +628,7 @@ export default class TransitionView extends Component {
     return false
   }
 
-  focus() {
+  focus () {
     this.getView().focus()
   }
 }

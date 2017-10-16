@@ -94,7 +94,6 @@ const getWeekStartMoment = (value, props) => {
  * @return {Moment[]}
  */
 const getDaysInMonthView = (value, props) => {
-
   const { locale, dateFormat } = props
   const toMomentParam = { locale, dateFormat }
 
@@ -138,7 +137,7 @@ const getWeekDayNames = (props) => {
 
   let names = weekDayNames
 
-  if (typeof names == 'function') {
+  if (typeof names === 'function') {
     names = names(weekStartDay, locale)
   } else if (Array.isArray(names)) {
     names = [...names]
@@ -155,13 +154,12 @@ const getWeekDayNames = (props) => {
 }
 
 class BasicMonthView extends Component {
-
-  componentWillMount() {
+  componentWillMount () {
     this.updateBem(this.props)
     this.updateToMoment(this.props)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.defaultClassName != this.props.defaultClassName) {
       this.updateBem(nextProps)
     }
@@ -169,11 +167,11 @@ class BasicMonthView extends Component {
     this.updateToMoment(nextProps)
   }
 
-  updateBem(props) {
+  updateBem (props) {
     this.bem = bemFactory(props.defaultClassName)
   }
 
-  updateToMoment(props) {
+  updateToMoment (props) {
     this.toMoment = (value, dateFormat) => {
       return toMoment(value, {
         locale: props.locale,
@@ -182,7 +180,7 @@ class BasicMonthView extends Component {
     }
   }
 
-  prepareProps(thisProps) {
+  prepareProps (thisProps) {
     const props = assign({}, thisProps)
 
     props.viewMoment = props.viewMoment || this.toMoment(props.viewDate)
@@ -194,14 +192,14 @@ class BasicMonthView extends Component {
     return props
   }
 
-  prepareClassName(props) {
+  prepareClassName (props) {
     return join(
       props.className,
       `${CLASS_NAME} dp-month-view`
     )
   }
 
-  render() {
+  render () {
     const props = this.p = this.prepareProps(this.props)
 
     const { viewMoment } = props
@@ -250,7 +248,7 @@ class BasicMonthView extends Component {
     delete flexProps.weekNumberName
     delete flexProps.weekStartDay
 
-    if (typeof props.cleanup == 'function') {
+    if (typeof props.cleanup === 'function') {
       props.cleanup(flexProps)
     }
 
@@ -258,7 +256,7 @@ class BasicMonthView extends Component {
       column
       wrap={false}
       inline
-      alignItems="stretch"
+      alignItems='stretch'
       {...flexProps}
 
       children={children}
@@ -270,7 +268,7 @@ class BasicMonthView extends Component {
    * @param  {Moment[]} days The days in a week
    * @return {React.DOM}
    */
-  renderWeekNumber(props, days) {
+  renderWeekNumber (props, days) {
     const firstDayOfWeek = days[0]
     const week = firstDayOfWeek.weeks()
 
@@ -319,7 +317,7 @@ class BasicMonthView extends Component {
    *
    * @return {React.DOM}
    */
-  renderDays(props, days) {
+  renderDays (props, days) {
     const nodes = days.map((date) => this.renderDay(props, date))
 
     const len = days.length
@@ -350,7 +348,7 @@ class BasicMonthView extends Component {
     />)
   }
 
-  renderDay(props, dateMoment) {
+  renderDay (props, dateMoment) {
     const dayText = FORMAT.day(dateMoment, props.dayFormat)
 
     const classes = [
@@ -384,8 +382,7 @@ class BasicMonthView extends Component {
     return result
   }
 
-  renderWeekDayNames() {
-
+  renderWeekDayNames () {
     const props = this.p
     const {
       weekNumbers,
@@ -400,9 +397,9 @@ class BasicMonthView extends Component {
       return null
     }
 
-    const names = weekNumbers ?
-      [weekNumberName].concat(getWeekDayNames(props)) :
-      getWeekDayNames(props)
+    const names = weekNumbers
+      ? [weekNumberName].concat(getWeekDayNames(props))
+      : getWeekDayNames(props)
 
     const className = `${this.bem('row')} ${this.bem('week-day-names')} dp-row dp-week-day-names`
 
@@ -444,7 +441,6 @@ class BasicMonthView extends Component {
 
     </div>
   }
-
 }
 
 BasicMonthView.propTypes = {
@@ -460,10 +456,10 @@ BasicMonthView.propTypes = {
   // the name to give to the week number column
   weekNumberName: PropTypes.string,
 
-  weekDayNames(props, propName) {
+  weekDayNames (props, propName) {
     const value = props[propName]
 
-    if (typeof value != 'function' && value !== false && !Array.isArray(value)) {
+    if (typeof value !== 'function' && value !== false && !Array.isArray(value)) {
       return new Error(`"weekDayNames" should be a function, an array or the boolean "false"`)
     }
 

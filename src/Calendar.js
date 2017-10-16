@@ -13,19 +13,18 @@ import forwardTime from './utils/forwardTime'
 import { Flex } from 'react-flex'
 
 export default class Calendar extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
       timeFocused: false
     }
   }
-  prepareDate(props) {
+  prepareDate (props) {
     return toMoment(props.date, props)
   }
 
-  render() {
+  render () {
     const props = this.p = assign({}, this.props)
     const dateFormat = props.dateFormat.toLowerCase()
 
@@ -51,7 +50,7 @@ export default class Calendar extends Component {
     delete monthViewProps.updateOnWheel
     delete monthViewProps.wrapTime
 
-    if (typeof this.props.cleanup == 'function') {
+    if (typeof this.props.cleanup === 'function') {
       this.props.cleanup(monthViewProps)
     }
 
@@ -69,7 +68,7 @@ export default class Calendar extends Component {
     </Flex>
   }
 
-  isHistoryViewVisible() {
+  isHistoryViewVisible () {
     if (this.view && this.view.isHistoryViewVisible) {
       return this.view.isHistoryViewVisible()
     }
@@ -77,20 +76,20 @@ export default class Calendar extends Component {
     return false
   }
 
-  renderChildren([navBar, inner, footer]) {
+  renderChildren ([navBar, inner, footer]) {
     const props = this.p
     const clockInput = props.showClock && this.renderClockInput()
 
     const children = [
       navBar,
-      <Flex justifyContent="center" wrap={this.props.wrap || this.props.wrapTime}>
+      <Flex justifyContent='center' wrap={this.props.wrap || this.props.wrapTime}>
         <Flex
-          flexGrow="1"
-          flexShrink="0"
-          flexBasis="auto"
+          flexGrow='1'
+          flexShrink='0'
+          flexBasis='auto'
           column
           wrap={false}
-          alignItems="stretch"
+          alignItems='stretch'
           children={inner}
         />
         {clockInput}
@@ -101,18 +100,18 @@ export default class Calendar extends Component {
     return <Flex
       column
       wrap={false}
-      alignItems="stretch"
+      alignItems='stretch'
       children={children}
     />
   }
 
-  focus() {
+  focus () {
     if (this.view) {
       this.view.focus()
     }
   }
 
-  isFocused() {
+  isFocused () {
     if (this.view) {
       return this.view.isFocused()
     }
@@ -120,17 +119,17 @@ export default class Calendar extends Component {
     return false
   }
 
-  onViewKeyDown(...args) {
+  onViewKeyDown (...args) {
     if (this.view) {
       this.view.onViewKeyDown(...args)
     }
   }
 
-  isTimeInputFocused() {
+  isTimeInputFocused () {
     return this.state.timeFocused
   }
 
-  renderClockInput() {
+  renderClockInput () {
     const clockInput = null
 
     const readOnly = this.props.readOnly
@@ -164,7 +163,7 @@ export default class Calendar extends Component {
     />
   }
 
-  onClockInputFocus() {
+  onClockInputFocus () {
     this.setState({
       timeFocused: true
     })
@@ -172,7 +171,7 @@ export default class Calendar extends Component {
     this.props.onClockInputFocus()
   }
 
-  onClockInputBlur() {
+  onClockInputBlur () {
     this.setState({
       timeFocused: false
     })
@@ -180,7 +179,7 @@ export default class Calendar extends Component {
     this.props.onClockInputBlur()
   }
 
-  onClockInputMouseDown(event) {
+  onClockInputMouseDown (event) {
     event.stopPropagation()
     if (event.target && event.target.type != 'text') {
       // in order not to blur - in case we're in a date field
@@ -190,7 +189,7 @@ export default class Calendar extends Component {
     this.clockInput.focus()
   }
 
-  onTimeChange(value, timeFormat) {
+  onTimeChange (value, timeFormat) {
     this.time = value
     this.props.onTimeChange(value, timeFormat)
 
@@ -207,7 +206,7 @@ export default class Calendar extends Component {
     })
   }
 
-  onChange(dateString, { dateMoment, timestamp }, event) {
+  onChange (dateString, { dateMoment, timestamp }, event) {
     const props = this.p
 
     if (props.showClock) {

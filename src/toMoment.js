@@ -30,13 +30,13 @@ export default (value, dateFormat, config) => {
 
   dateFormat = dateFormat || (config && config.dateFormat) || 'YYYY-MM-DD'
 
-  if (typeof value == 'string') {
+  if (typeof value === 'string') {
     return moment(value, dateFormat, locale, strict)
   }
 
-  value = value == null ?
-            new Date() :
-            value
+  value = value == null
+    ? new Date()
+    : value
 
   return moment(value, undefined, locale, strict)
 }

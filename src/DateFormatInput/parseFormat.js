@@ -61,7 +61,7 @@ export default (format) => {
           }
           index++
           matches.push(matchObject)
-          continue; // to skip incrementing twice
+          continue // to skip incrementing twice
         }
       } else {
         matchObject = assign({}, FORMATS[suggestionMatch], {
@@ -77,7 +77,7 @@ export default (format) => {
           positionIndex++
           index++
         }
-        continue; // to skip incrementing index once more
+        continue // to skip incrementing index once more
       }
     }
 

@@ -84,7 +84,6 @@
   .date-picker .dp-footer {
     padding: 3px;
     -webkit-box-pack: center;
-    -webkit-justify-content: center;
         -ms-flex-pack: center;
             justify-content: center;
     border-top: 1px solid #aeaeae; }
@@ -162,7 +161,6 @@
   .react-date-picker .dp-nav-table .dp-nav-cell,
   .date-picker .dp-nav-table .dp-nav-cell {
     -webkit-box-flex: 0;
-    -webkit-flex: 0;
         -ms-flex: 0;
             flex: 0;
     touch-callout: none;

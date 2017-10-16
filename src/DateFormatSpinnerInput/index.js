@@ -10,8 +10,7 @@ import assignDefined from '../assignDefined'
 import join from '../join'
 
 export default class DateFormatSpinnerInput extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -19,11 +18,11 @@ export default class DateFormatSpinnerInput extends Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.started = false
   }
 
-  render() {
+  render () {
     const props = this.props
     const children = React.Children.toArray(props.children)
 
@@ -60,14 +59,14 @@ export default class DateFormatSpinnerInput extends Component {
     const arrowSize = this.props.arrowSize
 
     this.arrows = {
-      1: <svg height={arrowSize} viewBox="0 0 24 24" width={arrowSize} >
-        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
-        {/*<path d="M0 0h24v24H0z" fill="none"/>*/}
+      1: <svg height={arrowSize} viewBox='0 0 24 24' width={arrowSize} >
+        <path d='M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z' />
+        {/* <path d="M0 0h24v24H0z" fill="none"/> */}
       </svg>,
 
-      '-1': <svg height={arrowSize} viewBox="0 0 24 24" width={arrowSize} >
-        <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z" />
-        {/*<path d="M0-.75h24v24H0z" fill="none"/>*/}
+      '-1': <svg height={arrowSize} viewBox='0 0 24 24' width={arrowSize} >
+        <path d='M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z' />
+        {/* <path d="M0-.75h24v24H0z" fill="none"/> */}
       </svg>
     }
 
@@ -94,7 +93,7 @@ export default class DateFormatSpinnerInput extends Component {
     </Flex>
   }
 
-  renderArrows() {
+  renderArrows () {
     if (this.props.renderArrows) {
       return this.props.renderArrows(this.props)
     }
@@ -108,10 +107,10 @@ export default class DateFormatSpinnerInput extends Component {
     </Flex>
   }
 
-  renderArrow(dir) {
+  renderArrow (dir) {
     return <Item
       flexShrink={1}
-      className="react-date-picker__date-format-spinner-arrow"
+      className='react-date-picker__date-format-spinner-arrow'
       style={{ overflow: 'hidden', height: this.props.arrowSize }}
       onMouseDown={this.onMouseDown.bind(this, dir)}
       onMouseUp={this.stop}
@@ -121,7 +120,7 @@ export default class DateFormatSpinnerInput extends Component {
     </Item>
   }
 
-  onMouseDown(dir, event) {
+  onMouseDown (dir, event) {
     if (this.props.disabled) {
       event.preventDefault()
       return
@@ -139,7 +138,7 @@ export default class DateFormatSpinnerInput extends Component {
     }
   }
 
-  start(dir) {
+  start (dir) {
     this.started = true
     this.startTime = Date.now()
 
@@ -159,19 +158,19 @@ export default class DateFormatSpinnerInput extends Component {
     }, this.props.firstStepDelay)
   }
 
-  isStarted() {
+  isStarted () {
     return !!(this.started && this.input)
   }
 
-  increment(dir) {
+  increment (dir) {
     this.input.onDirection(dir)
   }
 
-  step(dir, callback, delay) {
+  step (dir, callback, delay) {
     if (this.isStarted()) {
       this.increment(dir)
 
-      if (typeof callback == 'function') {
+      if (typeof callback === 'function') {
         this.timeoutId = setTimeout(() => {
           if (this.isStarted()) {
             callback()
@@ -181,24 +180,24 @@ export default class DateFormatSpinnerInput extends Component {
     }
   }
 
-  stop() {
+  stop () {
     this.started = false
     if (this.timeoutId) {
       global.clearTimeout(this.timeoutId)
     }
   }
 
-  focus() {
+  focus () {
     if (this.input) {
       this.input.focus()
     }
   }
 
-  isFocused() {
+  isFocused () {
     return this.state.focused
   }
 
-  onBlur(event) {
+  onBlur (event) {
     const { props } = this
     const onBlur = joinFunctions(
       props.onBlur,
@@ -214,7 +213,7 @@ export default class DateFormatSpinnerInput extends Component {
     })
   }
 
-  onFocus(event) {
+  onFocus (event) {
     const { props } = this
     const onFocus = joinFunctions(
       props.onFocus,

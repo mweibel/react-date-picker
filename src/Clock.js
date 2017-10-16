@@ -12,9 +12,9 @@ import normalize from 'react-style-normalizer'
 const MINUTES = Array.apply(null, new Array(60)).map((_, index) => index)
 
 const toUpperFirst = (str) => {
-  return str ?
-    str.charAt(0).toUpperCase() + str.substr(1) :
-    ''
+  return str
+    ? str.charAt(0).toUpperCase() + str.substr(1)
+    : ''
 }
 
 const transformStyle = normalize({ transform: '' })
@@ -34,23 +34,22 @@ const rotateTickStyle = (tick, { width, height }, totalSize, offset) => {
 }
 
 export default class Clock extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     let time
     let seconds
 
     if (props.defaultSeconds) {
-      seconds = props.defaultSeconds == true ?
-                  Date.now() / 1000 :
-                 +props.defaultSeconds
+      seconds = props.defaultSeconds == true
+        ? Date.now() / 1000
+        : +props.defaultSeconds
     }
 
     if (props.defaultTime) {
-      time = props.defaultTime == true ?
-              Date.now() :
-              +props.defaultTime
+      time = props.defaultTime == true
+        ? Date.now()
+        : +props.defaultTime
     }
 
     // if (time === undefined) {
@@ -70,7 +69,7 @@ export default class Clock extends Component {
     }
   }
 
-  shouldRun(props) {
+  shouldRun (props) {
     props = props || this.props
 
     if (props.run === false) {
@@ -80,7 +79,7 @@ export default class Clock extends Component {
     return !!(props.defaultSeconds || props.defaultTime)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.shouldRun(this.props)) {
       this.start()
     }
@@ -92,7 +91,7 @@ export default class Clock extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     const currentRun = this.shouldRun(this.props)
     const nextRun = this.shouldRun(nextProps)
 
@@ -103,27 +102,27 @@ export default class Clock extends Component {
     }
   }
 
-  start() {
-    this.startTime = Date.now ? Date.now() : +new Date
+  start () {
+    this.startTime = Date.now ? Date.now() : +new Date()
 
     this.run()
   }
 
-  stop() {
+  stop () {
     if (this.timeoutId) {
       clearTimeout(this.timeoutId)
     }
   }
 
-  run() {
+  run () {
     this.timeoutId = setTimeout(() => {
       this.update()
       this.run()
     }, this.props.updateInterval || 1000)
   }
 
-  update() {
-    const now = Date.now ? Date.now() : +new Date
+  update () {
+    const now = Date.now ? Date.now() : +new Date()
     const diff = now - this.startTime
 
     const seconds = this.getPropsSeconds()
@@ -138,7 +137,7 @@ export default class Clock extends Component {
     this.setTime(time + diff)
   }
 
-  setSeconds(seconds) {
+  setSeconds (seconds) {
     this.setState({
       seconds
     })
@@ -148,7 +147,7 @@ export default class Clock extends Component {
     }
   }
 
-  setTime(time) {
+  setTime (time) {
     this.setState({
       time
     })
@@ -158,23 +157,23 @@ export default class Clock extends Component {
     }
   }
 
-  getPropsTime() {
+  getPropsTime () {
     return this.props.time || this.state.defaultTime || 0
   }
 
-  getPropsSeconds() {
+  getPropsSeconds () {
     return this.props.seconds || this.state.defaultSeconds
   }
 
-  getSeconds() {
+  getSeconds () {
     return this.state.seconds || this.getPropsSeconds()
   }
 
-  getTime() {
+  getTime () {
     return this.state.time || this.getPropsTime()
   }
 
-  render() {
+  render () {
     const props = this.p = assign({}, this.props)
     let size = props.size
 
@@ -261,7 +260,7 @@ export default class Clock extends Component {
     delete divProps.tickOffset
     delete divProps.tickWidth
 
-    if (typeof props.cleanup == 'function') {
+    if (typeof props.cleanup === 'function') {
       props.cleanup(divProps)
     }
 
@@ -283,22 +282,22 @@ export default class Clock extends Component {
     </div>
   }
 
-  renderCenter() {
+  renderCenter () {
     const props = this.props
     const centerSize = props.centerSize || ((props.bigTickHeight || props.tickHeight) * 3)
 
     return <div
-      className="react-date-picker__clock-center"
+      className='react-date-picker__clock-center'
       style={{ width: centerSize, height: centerSize }}
     />
   }
 
-  renderCenterOverlay() {
+  renderCenterOverlay () {
     const props = this.props
     const centerOverlaySize = props.centerOverlaySize || (props.handWidth * 4)
 
     return <div
-      className="react-date-picker__clock-overlay"
+      className='react-date-picker__clock-overlay'
       style={{
         width: centerOverlaySize,
         height: centerOverlaySize,
@@ -307,7 +306,7 @@ export default class Clock extends Component {
     />
   }
 
-  onResize({ width, height }) {
+  onResize ({ width, height }) {
     if (width != height) {
       console.warn('Clock width != height. Please make sure it\'s a square.')
     }
@@ -317,19 +316,19 @@ export default class Clock extends Component {
     })
   }
 
-  renderSecondHand(value) {
+  renderSecondHand (value) {
     return this.props.showSecondsHand && this.renderHand('second', value)
   }
 
-  renderMinuteHand(value) {
+  renderMinuteHand (value) {
     return this.props.showMinutesHand && this.renderHand('minute', value)
   }
 
-  renderHourHand(value) {
+  renderHourHand (value) {
     return this.props.showHoursHand && this.renderHand('hour', value)
   }
 
-  renderHand(name, value) {
+  renderHand (name, value) {
     if (this.ignoreRender) {
       return null
     }
@@ -373,7 +372,7 @@ export default class Clock extends Component {
     return <div key={name} className={className} style={style} />
   }
 
-  renderTick(tick) {
+  renderTick (tick) {
     if (this.ignoreRender) {
       return null
     }
@@ -407,17 +406,17 @@ export default class Clock extends Component {
       `react-date-picker__clock-tick--${sizeName}`
     )
 
-    const offset = small ?
-                    smallTickOffset || tickOffset :
-                    bigTickOffset || tickOffset
+    const offset = small
+      ? smallTickOffset || tickOffset
+      : bigTickOffset || tickOffset
 
-    const tWidth = small ?
-                    smallTickWidth || tickWidth :
-                    bigTickWidth || tickWidth
+    const tWidth = small
+      ? smallTickWidth || tickWidth
+      : bigTickWidth || tickWidth
 
-    const tHeight = small ?
-                      smallTickHeight || tickHeight :
-                      bigTickHeight || tickHeight
+    const tHeight = small
+      ? smallTickHeight || tickHeight
+      : bigTickHeight || tickHeight
 
     const totalSize = size - borderWidth
     const style = rotateTickStyle(tick, {

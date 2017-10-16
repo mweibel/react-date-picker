@@ -74,9 +74,9 @@ const isInView = function (mom, props) {
 }
 
 const prepareViewDate = function (props, state) {
-  const viewDate = props.viewDate === undefined ?
-        state.viewDate :
-        props.viewDate
+  const viewDate = props.viewDate === undefined
+    ? state.viewDate
+    : props.viewDate
 
   if (!viewDate && props.moment) {
     return toMoment(props.moment)
@@ -90,9 +90,9 @@ const prepareDate = function (props, state) {
     return null
   }
 
-  return props.date === undefined ?
-          state.date :
-          props.date
+  return props.date === undefined
+    ? state.date
+    : props.date
 }
 
 const prepareRange = function (props, state) {
@@ -100,18 +100,18 @@ const prepareRange = function (props, state) {
     return null
   }
 
-  return props.partialRange ?
-    props.range || state.range :
-    state.range || props.range
+  return props.partialRange
+    ? props.range || state.range
+    : state.range || props.range
 }
 
 const prepareActiveDate = function (props, state) {
   const fallbackDate = prepareDate(props, state) || ((prepareRange(props, state) || [])[0])
 
-  const activeDate = props.activeDate === undefined ?
-      // only fallback to date if activeDate not specified
-      (state.activeDate || fallbackDate) :
-      props.activeDate
+  const activeDate = props.activeDate === undefined
+    // only fallback to date if activeDate not specified
+    ? (state.activeDate || fallbackDate)
+    : props.activeDate
 
   const daysInView = props.daysInView
 
@@ -170,15 +170,15 @@ const renderFooter = (props, buttonHandlers) => {
     clearButton: props.clearButton,
     clearButtonText: props.clearButtonText,
 
-    okButton: props.okButton === undefined && !props.insideField ?
-      false :
-      props.okButton,
+    okButton: props.okButton === undefined && !props.insideField
+      ? false
+      : props.okButton,
 
     okButtonText: props.okButtonText,
 
-    cancelButton: props.cancelButton === undefined && !props.insideField ?
-      false :
-      props.cancelButton,
+    cancelButton: props.cancelButton === undefined && !props.insideField
+      ? false
+      : props.cancelButton,
 
     cancelButtonText: props.cancelButtonText,
 
@@ -203,12 +203,11 @@ const renderFooter = (props, buttonHandlers) => {
 }
 
 export default class MonthView extends Component {
-
-  isInView(mom, props) {
+  isInView (mom, props) {
     return isInView(mom, props || this.p)
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -220,12 +219,12 @@ export default class MonthView extends Component {
     }
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.updateBem(this.props)
     this.updateToMoment(this.props)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.defaultClassName != this.props.defaultClassName) {
       this.updateBem(nextProps)
     }
@@ -233,11 +232,11 @@ export default class MonthView extends Component {
     this.updateToMoment(nextProps)
   }
 
-  updateBem(props) {
+  updateBem (props) {
     this.bem = bemFactory(props.defaultClassName)
   }
 
-  updateToMoment(props) {
+  updateToMoment (props) {
     this.toMoment = (value, dateFormat) => {
       return toMoment(value, {
         locale: props.locale,
@@ -248,7 +247,7 @@ export default class MonthView extends Component {
     TODAY = +this.toMoment().startOf('day')
   }
 
-  prepareClassName(props) {
+  prepareClassName (props) {
     return join(
       props.className,
       this.bem(),
@@ -256,7 +255,7 @@ export default class MonthView extends Component {
     )
   }
 
-  prepareProps(thisProps, state) {
+  prepareProps (thisProps, state) {
     const props = this.p = assign({}, thisProps)
 
     state = state || this.state
@@ -318,11 +317,11 @@ export default class MonthView extends Component {
     return props
   }
 
-  getViewMoment() {
+  getViewMoment () {
     return this.p.viewMoment
   }
 
-  getViewSize() {
+  getViewSize () {
     return 1
   }
 
@@ -330,7 +329,7 @@ export default class MonthView extends Component {
   //   this.state.range && this.setState({ range: null })
   // }
 
-  preparePrevNextClassName(timestamp, props) {
+  preparePrevNextClassName (timestamp, props) {
     const { viewMonthStart, viewMonthEnd } = props
 
     const before = timestamp < viewMonthStart
@@ -352,7 +351,7 @@ export default class MonthView extends Component {
     )
   }
 
-  prepareMinMaxProps(timestamp, props) {
+  prepareMinMaxProps (timestamp, props) {
     const classes = []
 
     let isBeforeMinDate = false
@@ -382,7 +381,7 @@ export default class MonthView extends Component {
     }
   }
 
-  prepareWeekendClassName(dateMoment, { highlightWeekends }) {
+  prepareWeekendClassName (dateMoment, { highlightWeekends }) {
     // const props = this.p
     const weekDay = dateMoment.day()
 
@@ -399,7 +398,7 @@ export default class MonthView extends Component {
     return ''
   }
 
-  prepareRangeProps(dateMoment, props) {
+  prepareRangeProps (dateMoment, props) {
     let inRange = false
 
     const className = []
@@ -414,7 +413,7 @@ export default class MonthView extends Component {
       }
 
       // const rangeName = !props.partialRange ? 'hover-range' : 'range'
-      const rangeName = 'range' //hoverRange ? 'range' : 'hover-range'
+      const rangeName = 'range' // hoverRange ? 'range' : 'hover-range'
 
       if (rangeStart && dateMoment.isSame(rangeStart)) {
         className.push(this.bem(`day--${rangeName}-start`))
@@ -459,7 +458,7 @@ export default class MonthView extends Component {
     }
   }
 
-  prepareDayProps(renderDayProps, props) {
+  prepareDayProps (renderDayProps, props) {
     const { timestamp, dateMoment, className } = renderDayProps
 
     props = props || this.p
@@ -500,7 +499,7 @@ export default class MonthView extends Component {
     return result
   }
 
-  focus() {
+  focus () {
     const domNode = findDOMNode(this)
 
     if (domNode) {
@@ -508,7 +507,7 @@ export default class MonthView extends Component {
     }
   }
 
-  onDayTextMouseEnter({ dateMoment, timestamp }) {
+  onDayTextMouseEnter ({ dateMoment, timestamp }) {
     if (!this.state.focused) {
       this.focus()
     }
@@ -516,7 +515,7 @@ export default class MonthView extends Component {
     this.onActiveDateChange({ dateMoment, timestamp })
   }
 
-  renderDay(renderProps) {
+  renderDay (renderProps) {
     const props = this.p
 
     const { dateMoment, timestamp } = renderProps
@@ -545,25 +544,23 @@ export default class MonthView extends Component {
       const onClick = this.handleClick.bind(this, eventParam)
       const prevOnClick = renderProps.onClick
 
-      renderProps.onClick = prevOnClick ?
-                              (...args) => {
-                                prevOnClick(...args)
-                                onClick(...args)
-                              }
-                              :
-                              onClick
+      renderProps.onClick = prevOnClick
+        ? (...args) => {
+          prevOnClick(...args)
+          onClick(...args)
+        }
+        : onClick
 
       if (props.activateOnHover && this.props.activeDate !== null) {
         const onMouseEnter = this.onDayTextMouseEnter.bind(this, eventParam)
         const prevOnMouseEnter = renderProps.onMouseEnter
 
-        renderProps.onMouseEnter = prevOnMouseEnter ?
-                                    (...args) => {
-                                      prevOnMouseEnter(...args)
-                                      onMouseEnter(...args)
-                                    }
-                                    :
-                                    onMouseEnter
+        renderProps.onMouseEnter = prevOnMouseEnter
+          ? (...args) => {
+            prevOnMouseEnter(...args)
+            onMouseEnter(...args)
+          }
+          : onMouseEnter
       }
     }
 
@@ -580,7 +577,7 @@ export default class MonthView extends Component {
     return result
   }
 
-  render() {
+  render () {
     const props = this.p = this.prepareProps(this.props)
 
     const basicViewProps = assign({}, props)
@@ -655,7 +652,7 @@ export default class MonthView extends Component {
     delete basicViewProps.viewMonthEnd
     delete basicViewProps.viewMonthStart
 
-    if (typeof props.cleanup == 'function') {
+    if (typeof props.cleanup === 'function') {
       props.cleanup(basicViewProps)
     }
 
@@ -675,7 +672,7 @@ export default class MonthView extends Component {
     />
   }
 
-  handleViewMouseLeave(event) {
+  handleViewMouseLeave (event) {
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event)
     }
@@ -685,7 +682,7 @@ export default class MonthView extends Component {
     }
   }
 
-  renderChildren(children) {
+  renderChildren (children) {
     const props = this.p
     const navBar = this.renderNavBar(props)
     const footer = this.renderFooter(props)
@@ -703,13 +700,13 @@ export default class MonthView extends Component {
     return result
   }
 
-  focusFromFooter() {
+  focusFromFooter () {
     if (!this.isFocused() && this.props.focusOnFooterMouseDown) {
       this.focus()
     }
   }
 
-  onFooterTodayClick() {
+  onFooterTodayClick () {
     this.focusFromFooter()
 
     if (this.props.onFooterTodayClick) {
@@ -721,7 +718,7 @@ export default class MonthView extends Component {
     this.select({ dateMoment: this.toMoment(Date.now()) })
   }
 
-  onFooterClearClick() {
+  onFooterClearClick () {
     this.focusFromFooter()
 
     if (this.props.onFooterClearClick) {
@@ -733,7 +730,7 @@ export default class MonthView extends Component {
     this.select({ dateMoment: null })
   }
 
-  onFooterOkClick() {
+  onFooterOkClick () {
     this.focusFromFooter()
 
     if (this.props.onFooterOkClick) {
@@ -741,20 +738,20 @@ export default class MonthView extends Component {
     }
   }
 
-  onFooterCancelClick() {
+  onFooterCancelClick () {
     if (this.props.onFooterCancelClick) {
       this.props.onFooterCancelClick()
     }
   }
 
-  renderFooter(props) {
+  renderFooter (props) {
     return renderFooter(assign({}, props, {
       selectDate: this.select,
       owner: this
     }), this)
   }
 
-  renderNavBar(props) {
+  renderNavBar (props) {
     const theme = props.theme
 
     const childNavBar = React.Children.toArray(props.children)
@@ -791,7 +788,7 @@ export default class MonthView extends Component {
       theme,
       ref,
       minDate: props.minDate,
-      maxDate: props.maxDate,
+      maxDate: props.maxDate
     }, {
       enableHistoryView: props.enableHistoryView
     }))
@@ -827,13 +824,13 @@ export default class MonthView extends Component {
     return null
   }
 
-  onNavMouseDown(event) {
+  onNavMouseDown (event) {
     if (this.props.focusOnNavMouseDown && !this.isFocused()) {
       this.focus()
     }
   }
 
-  renderNavBarComponent(navBarProps) {
+  renderNavBarComponent (navBarProps) {
     if (this.props.renderNavBar) {
       return this.props.renderNavBar(navBarProps)
     }
@@ -841,11 +838,11 @@ export default class MonthView extends Component {
     return <NavBar {...navBarProps} />
   }
 
-  isFocused() {
+  isFocused () {
     return this.state.focused
   }
 
-  onFocus(event) {
+  onFocus (event) {
     this.setState({
       focused: true
     })
@@ -853,7 +850,7 @@ export default class MonthView extends Component {
     this.props.onFocus(event)
   }
 
-  onBlur(event) {
+  onBlur (event) {
     this.setState({
       focused: false
     })
@@ -863,19 +860,19 @@ export default class MonthView extends Component {
     this.props.onBlur(event)
   }
 
-  showHistoryView() {
+  showHistoryView () {
     if (this.navBar) {
       this.navBar.showHistoryView()
     }
   }
 
-  hideHistoryView() {
+  hideHistoryView () {
     if (this.navBar) {
       this.navBar.hideHistoryView()
     }
   }
 
-  isHistoryViewVisible() {
+  isHistoryViewVisible () {
     if (this.navBar) {
       return this.navBar.isHistoryViewVisible()
     }
@@ -883,7 +880,7 @@ export default class MonthView extends Component {
     return false
   }
 
-  tryNavBarKeyDown(event) {
+  tryNavBarKeyDown (event) {
     if (this.navBar && this.navBar.getHistoryView) {
       const historyView = this.navBar.getHistoryView()
 
@@ -896,7 +893,7 @@ export default class MonthView extends Component {
     return false
   }
 
-  onViewKeyDown(event) {
+  onViewKeyDown (event) {
     if (this.tryNavBarKeyDown(event)) {
       return
     }
@@ -904,7 +901,7 @@ export default class MonthView extends Component {
     return ON_KEY_DOWN.call(this, event)
   }
 
-  confirm(date, event) {
+  confirm (date, event) {
     event.preventDefault()
 
     if (this.props.confirm) {
@@ -918,15 +915,15 @@ export default class MonthView extends Component {
     return undefined
   }
 
-  navigate(dir, event) {
+  navigate (dir, event) {
     const props = this.p
 
     const getNavigationDate = (dir, date, dateFormat) => {
       const mom = moment.isMoment(date) ? date : this.toMoment(date, dateFormat)
 
-      return typeof dir == 'function' ?
-          dir(mom) :
-          mom.add(dir, 'day')
+      return typeof dir === 'function'
+        ? dir(mom)
+        : mom.add(dir, 'day')
     }
 
     if (props.navigate) {
@@ -944,7 +941,7 @@ export default class MonthView extends Component {
     return undefined
   }
 
-  handleDayMouseEnter(dayProps) {
+  handleDayMouseEnter (dayProps) {
     const props = this.p
 
     const { rangeStart, range } = props
@@ -956,7 +953,7 @@ export default class MonthView extends Component {
     }
   }
 
-  handleClick({ timestamp, dateMoment }, event) {
+  handleClick ({ timestamp, dateMoment }, event) {
     const props = this.p
 
     if (props.minDate && timestamp < props.minDate) {
@@ -972,7 +969,7 @@ export default class MonthView extends Component {
     this.select({ dateMoment, timestamp }, event)
   }
 
-  select({ dateMoment, timestamp }, event) {
+  select ({ dateMoment, timestamp }, event) {
     if (dateMoment && timestamp === undefined) {
       timestamp = +dateMoment
     }
@@ -999,7 +996,7 @@ export default class MonthView extends Component {
     return undefined
   }
 
-  selectRange({ dateMoment, timestamp }, event) {
+  selectRange ({ dateMoment, timestamp }, event) {
     const props = this.p
     const range = props.range
     const rangeStart = props.rangeStart
@@ -1017,7 +1014,7 @@ export default class MonthView extends Component {
         rangeStart: dateMoment
       })
 
-      if (range.length == 2 ) {
+      if (range.length == 2) {
         this.onRangeChange([], event)
       }
     } else {
@@ -1032,11 +1029,11 @@ export default class MonthView extends Component {
     }
   }
 
-  format(mom) {
+  format (mom) {
     return mom == null ? '' : mom.format(this.props.dateFormat)
   }
 
-  setHoverRange(hoverRange) {
+  setHoverRange (hoverRange) {
     if (this.props.hoverRange === undefined) {
       this.setState({
         hoverRange
@@ -1048,7 +1045,7 @@ export default class MonthView extends Component {
     }
   }
 
-  onRangeChange(range, event) {
+  onRangeChange (range, event) {
     this.setState({
       range: this.props.range === undefined ? range : null
     })
@@ -1072,7 +1069,7 @@ export default class MonthView extends Component {
     }
   }
 
-  onChange({ dateMoment, timestamp }, event) {
+  onChange ({ dateMoment, timestamp }, event) {
     if (this.props.date === undefined) {
       this.setState({
         date: timestamp
@@ -1085,11 +1082,11 @@ export default class MonthView extends Component {
     }
   }
 
-  onNavViewDateChange(dateString, { dateMoment, timestamp }) {
+  onNavViewDateChange (dateString, { dateMoment, timestamp }) {
     this.onViewDateChange({ dateMoment, timestamp })
   }
 
-  onViewDateChange({ dateMoment, timestamp }) {
+  onViewDateChange ({ dateMoment, timestamp }) {
     let minDate
     let maxDate
 
@@ -1119,11 +1116,11 @@ export default class MonthView extends Component {
     }
   }
 
-  isValidActiveDate(date, props) {
+  isValidActiveDate (date, props) {
     return isValidActiveDate(date, props || this.p)
   }
 
-  onActiveDateChange({ dateMoment, timestamp }) {
+  onActiveDateChange ({ dateMoment, timestamp }) {
     if (!isValidActiveDate(timestamp, this.p)) {
       return
     }
@@ -1156,7 +1153,7 @@ export default class MonthView extends Component {
     }
   }
 
-  gotoViewDate({ dateMoment, timestamp }) {
+  gotoViewDate ({ dateMoment, timestamp }) {
     if (!timestamp) {
       timestamp = dateMoment == null ? null : +dateMoment
     }

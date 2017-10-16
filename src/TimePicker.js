@@ -14,8 +14,7 @@ import Clock from './Clock'
 import {Flex, Item} from 'react-flex'
 
 export default class TimePicker extends Component {
-
-  constructor(props){
+  constructor (props) {
     super(props)
 
     this.state = {}
@@ -25,8 +24,7 @@ export default class TimePicker extends Component {
   //   return toMoment(props.date, props)
   // }
 
-  render(){
-
+  render () {
     const props = this.p = assign({}, this.props)
     props.children = React.Children.toArray(props.children)
 
@@ -52,21 +50,21 @@ export default class TimePicker extends Component {
     </Flex>
   }
 
-  renderInput(){
+  renderInput () {
     return <TimeInput
-      className="react-date-picker__time-picker-input"
+      className='react-date-picker__time-picker-input'
       format={this.props.timeFormat || this.props.format}
       defaultValue={this.props.value || this.props.defaultValue}
       onChange={this.onTimeChange}
     />
   }
 
-  onTimeChange(value){
+  onTimeChange (value) {
     const time = value.split(':')
 
     let seconds = time[0] * 3600 + parseInt(time[1], 10) * 60
 
-    if (time[2]){
+    if (time[2]) {
       seconds += parseInt(time[2], 10)
     }
 
@@ -74,23 +72,22 @@ export default class TimePicker extends Component {
       seconds
     })
 
-    if (this.props.onChange){
+    if (this.props.onChange) {
       this.props.onChange(value)
     }
   }
 
-  renderClock(){
-
+  renderClock () {
     const props = this.p
     const clock = props.children
-                  .filter(child => child && child.props && child.props.isTimePickerClock)[0]
+      .filter(child => child && child.props && child.props.isTimePickerClock)[0]
 
     const clockProps = {
       seconds: this.state.seconds,
       showSecondsHand: true
     }
 
-    if (clock){
+    if (clock) {
       return React.cloneElement(clock, clockProps)
     }
 

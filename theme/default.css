@@ -233,15 +233,12 @@
       max-width: 40px;
       max-height: 40px;
       display: -webkit-box;
-      display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
       -webkit-box-align: center;
-      -webkit-align-items: center;
           -ms-flex-align: center;
               align-items: center;
       -webkit-box-pack: center;
-      -webkit-justify-content: center;
           -ms-flex-pack: center;
               justify-content: center; }
       .react-date-picker__month-view--theme-default .react-date-picker__month-view-day .react-date-picker__month-view-day-text:hover {

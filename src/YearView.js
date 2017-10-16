@@ -30,42 +30,42 @@ import {
 } from './DecadeView'
 
 const NAV_KEYS = {
-  ArrowUp(mom) {
+  ArrowUp (mom) {
     if (mom.get('month') >= 4) {
       mom.add(-4, 'month')
     }
 
     return mom
   },
-  ArrowDown(mom) {
+  ArrowDown (mom) {
     if (mom.get('month') <= 7) {
       mom.add(4, 'month')
     }
 
     return mom
   },
-  ArrowLeft(mom) {
+  ArrowLeft (mom) {
     if (mom.get('month') >= 1) {
       mom.add(-1, 'month')
     }
 
     return mom
   },
-  ArrowRight(mom) {
+  ArrowRight (mom) {
     if (mom.get('month') <= 10) {
       mom.add(1, 'month')
     }
 
     return mom
   },
-  Home(mom) {
+  Home (mom) {
     return mom.startOf('year').startOf('month')
   },
-  End(mom) {
+  End (mom) {
     return mom.endOf('year').startOf('month')
   },
 
-  PageUp(mom) {
+  PageUp (mom) {
     const month = mom.get('month') - 4
     const extra4 = month - 4
 
@@ -80,7 +80,7 @@ const NAV_KEYS = {
     return mom
   },
 
-  PageDown(mom) {
+  PageDown (mom) {
     const month = mom.get('month') + 4
     const extra4 = month + 4
 
@@ -97,8 +97,7 @@ const NAV_KEYS = {
 }
 
 export default class YearView extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = getInitialState(props)
@@ -110,17 +109,17 @@ export default class YearView extends Component {
    * @param  {Moment/Date/Number} value
    * @return {Moment[]}
    */
-  getMonthsInYear(value) {
+  getMonthsInYear (value) {
     const start = this.toMoment(value).startOf('year')
 
     return times(12).map(i => this.toMoment(start).add(i, 'month'))
   }
 
-  toMoment(date) {
+  toMoment (date) {
     return toMoment(date, this.props)
   }
 
-  render() {
+  render () {
     const props = this.p = assign({}, this.props)
 
     if (props.onlyCompareMonth) {
@@ -176,14 +175,14 @@ export default class YearView extends Component {
     delete flexProps.viewDate
     delete flexProps.viewMoment
 
-    if (typeof props.cleanup == 'function') {
+    if (typeof props.cleanup === 'function') {
       props.cleanup(flexProps)
     }
 
     return <Flex
       inline
       column
-      alignItems="stretch"
+      alignItems='stretch'
       tabIndex={0}
       {...flexProps}
       onKeyDown={this.onKeyDown}
@@ -193,7 +192,7 @@ export default class YearView extends Component {
     </Flex>
   }
 
-  renderMonths(props, months) {
+  renderMonths (props, months) {
     const nodes = months.map(monthMoment => this.renderMonth(props, monthMoment))
 
     const buckets = times(Math.ceil(nodes.length / 4)).map(i => {
@@ -203,7 +202,7 @@ export default class YearView extends Component {
     const className = bem('row')
 
     return buckets.map((bucket, i) => <Flex
-      alignItems="center"
+      alignItems='center'
       flex
       row
       inline
@@ -214,31 +213,30 @@ export default class YearView extends Component {
     </Flex>)
   }
 
-  format(mom, format) {
+  format (mom, format) {
     format = format || this.props.monthFormat
 
     return mom.format(format)
   }
 
-  renderMonth(props, dateMoment) {
+  renderMonth (props, dateMoment) {
     const index = dateMoment.get('month')
 
-    const monthText = props.monthNames ?
-      props.monthNames[index] || this.format(dateMoment) :
-      this.format(dateMoment)
+    const monthText = props.monthNames
+      ? props.monthNames[index] || this.format(dateMoment)
+      : this.format(dateMoment)
 
     const timestamp = +dateMoment
 
-    const isActiveDate = props.onlyCompareMonth && props.activeMoment ?
-      dateMoment.get('month') == props.activeMoment.get('month') :
-      timestamp === props.activeDate
+    const isActiveDate = props.onlyCompareMonth && props.activeMoment
+      ? dateMoment.get('month') == props.activeMoment.get('month')
+      : timestamp === props.activeDate
 
-    const isValue = props.onlyCompareMonth && props.moment ?
-      dateMoment.get('month') == props.moment.get('month') :
-      timestamp === props.timestamp
+    const isValue = props.onlyCompareMonth && props.moment
+      ? dateMoment.get('month') == props.moment.get('month')
+      : timestamp === props.timestamp
 
-    const disabled = props.minDate != null && timestamp < props.minDate
-      ||
+    const disabled = props.minDate != null && timestamp < props.minDate ||
       props.maxDate != null && timestamp > props.maxDate
 
     const className = join(
@@ -248,9 +246,9 @@ export default class YearView extends Component {
       disabled && bem('month', 'disabled')
     )
 
-    const onClick = disabled ?
-      null :
-      this.handleClick.bind(this, {
+    const onClick = disabled
+      ? null
+      : this.handleClick.bind(this, {
         dateMoment,
         timestamp
       })
@@ -264,45 +262,45 @@ export default class YearView extends Component {
     </Item>
   }
 
-  handleClick({ timestamp, dateMoment }, event) {
+  handleClick ({ timestamp, dateMoment }, event) {
     event.target.value = timestamp
 
     this.select({ dateMoment, timestamp }, event)
   }
 
-  onKeyDown(event) {
+  onKeyDown (event) {
     return onKeyDown.call(this, event)
   }
 
-  confirm(date, event) {
+  confirm (date, event) {
     return confirm.call(this, date, event)
   }
 
-  navigate(direction, event) {
+  navigate (direction, event) {
     return navigate.call(this, direction, event)
   }
 
-  select({ dateMoment, timestamp }, event) {
+  select ({ dateMoment, timestamp }, event) {
     return select.call(this, { dateMoment, timestamp }, event)
   }
 
-  onViewDateChange({ dateMoment, timestamp }) {
+  onViewDateChange ({ dateMoment, timestamp }) {
     return onViewDateChange.call(this, { dateMoment, timestamp })
   }
 
-  gotoViewDate({ dateMoment, timestamp }) {
+  gotoViewDate ({ dateMoment, timestamp }) {
     return gotoViewDate.call(this, { dateMoment, timestamp })
   }
 
-  onActiveDateChange({ dateMoment, timestamp }) {
+  onActiveDateChange ({ dateMoment, timestamp }) {
     return onActiveDateChange.call(this, { dateMoment, timestamp })
   }
 
-  onChange({ dateMoment, timestamp }, event) {
+  onChange ({ dateMoment, timestamp }, event) {
     return onChange.call(this, { dateMoment, timestamp }, event)
   }
 
-  focus() {
+  focus () {
     findDOMNode(this).focus()
   }
 }
