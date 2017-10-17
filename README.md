@@ -4,6 +4,15 @@ react-date-picker
 ## Please note:
 This is not the official repo. I created this repo because the official repo at [zippyui/react-date-picker](https://github.com/zippyui/react-date-picker) disappeared (the whole organisation did so).
 
+This package is published as `react-date-picker-reborn` (`npm install react-date-picker-reborn`).
+Unless someone is willing to take over, I'll just do maintenance. This means:
+- No new features
+- Bugs may get resolved
+- PRs fixing bugs will be resolved
+- Upgrades of dependencies will be done from time to time
+
+## Old README
+
 <!-- [![Circle CI](https://circleci.com/gh/zippyui/react-date-picker/tree/master.svg?style=svg)](https://circleci.com/gh/zippyui/react-date-picker/tree/master) -->
 
 <img src="http://npm.packagequality.com/badge/react-date-picker.png"/>
