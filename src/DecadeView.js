@@ -1,9 +1,9 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import assign from 'object-assign'
-import { Flex, Item } from 'react-flex'
+import { Flex, Item } from '@zippytech/react-flex'
 import moment from 'moment'
 
 import times from './utils/times'

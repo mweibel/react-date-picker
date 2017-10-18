@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import moment from 'moment'
 import assign from 'object-assign'
 
-import { Flex } from 'react-flex'
+import { Flex } from '@zippytech/react-flex'
 
 import FORMAT from './utils/format'
 import toMoment from './toMoment'

@@ -1,7 +1,7 @@
 import React from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
-import { Flex, Item } from 'react-flex'
+import { Flex, Item } from '@zippytech/react-flex'
 import DateFormatInput from '../DateFormatInput'
 
 import assign from 'object-assign'

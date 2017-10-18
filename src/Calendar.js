@@ -1,5 +1,5 @@
 import React from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import assign from 'object-assign'
 import assignDefined from './assignDefined'
@@ -10,7 +10,7 @@ import join from './join'
 import ClockInput from './ClockInput'
 import forwardTime from './utils/forwardTime'
 
-import { Flex } from 'react-flex'
+import { Flex } from '@zippytech/react-flex'
 
 export default class Calendar extends Component {
   constructor (props) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import assign from 'object-assign'
 import join from './join'
@@ -12,7 +12,7 @@ import assignDefined from './assignDefined'
 
 import { renderFooter } from './MonthView'
 import NavBar from './NavBar'
-import { Flex } from 'react-flex'
+import { Flex } from '@zippytech/react-flex'
 import times from './utils/times'
 
 import InlineBlock from 'react-inline-block'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import assign from 'object-assign'
 
@@ -8,7 +8,7 @@ import times from './utils/times'
 import join from './join'
 import toMoment from './toMoment'
 
-import { Flex, Item } from 'react-flex'
+import { Flex, Item } from '@zippytech/react-flex'
 
 import bemFactory from './bemFactory'
 

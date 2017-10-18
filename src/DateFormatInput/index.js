@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 import throttle from 'lodash.throttle'
 import assign from 'object-assign'
 

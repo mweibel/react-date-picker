@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 import assign from 'object-assign'
 
-import { Flex } from 'react-flex'
+import { Flex } from '@zippytech/react-flex'
 import Input from 'react-field'
 import DateFormatInput from '../DateFormatInput'
 

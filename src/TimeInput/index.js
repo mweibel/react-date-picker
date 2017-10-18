@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import raf from 'raf'
 
@@ -11,7 +11,7 @@ import toMoment from '../toMoment'
 import join from '../join'
 import Clock from '../Clock'
 
-import {Flex, Item} from 'react-flex'
+import {Flex, Item} from '@zippytech/react-flex'
 
 import getSelectionStart from './getSelectionStart'
 import getSelectionEnd from './getSelectionEnd'

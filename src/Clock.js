@@ -1,5 +1,5 @@
 import React from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import assign from 'object-assign'
 

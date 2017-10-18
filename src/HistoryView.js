@@ -1,8 +1,8 @@
 import React from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import assign from 'object-assign'
-import { Flex } from 'react-flex'
+import { Flex } from '@zippytech/react-flex'
 import toMoment from './toMoment'
 import join from './join'
 import joinFunctions from './joinFunctions'

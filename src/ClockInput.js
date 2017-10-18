@@ -1,10 +1,10 @@
 import React from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import throttle from 'lodash.throttle'
 import assign from 'object-assign'
 
-import { Flex } from 'react-flex'
+import { Flex } from '@zippytech/react-flex'
 
 import join from './join'
 import toMoment from './toMoment'

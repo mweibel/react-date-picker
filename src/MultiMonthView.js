@@ -1,7 +1,7 @@
 import React from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
-import { Flex } from 'react-flex'
+import { Flex } from '@zippytech/react-flex'
 import InlineBlock from 'react-inline-block'
 
 import assign from 'object-assign'
