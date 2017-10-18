@@ -1,17 +1,14 @@
 import React, { PropTypes } from 'react'
-import { findDOMNode } from 'react-dom'
 import Component from '@zippytech/react-class'
 
 import TimeInput from './TimeInput'
 
-import moment from 'moment'
 import assign from 'object-assign'
 
-import toMoment from './toMoment'
 import join from './join'
 import Clock from './Clock'
 
-import {Flex, Item} from '@zippytech/react-flex'
+import {Flex} from '@zippytech/react-flex'
 
 export default class TimePicker extends Component {
   constructor (props) {

@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import Component from '@zippytech/react-class'
 
 import { Flex, Item } from '@zippytech/react-flex'
-import InlineBlock from 'react-inline-block'
 
 import assign from 'object-assign'
 

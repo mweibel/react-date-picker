@@ -16,7 +16,7 @@ import bemFactory from '../bemFactory'
 import joinFunctions from '../joinFunctions'
 import assignDefined from '../assignDefined'
 
-import BasicMonthView, { getDaysInMonthView, getWeekendStartDay } from '../BasicMonthView'
+import BasicMonthView, { getDaysInMonthView } from '../BasicMonthView'
 
 import ON_KEY_DOWN from './onKeyDown'
 import NAV_KEYS from './navKeys'

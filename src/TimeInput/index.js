@@ -4,28 +4,21 @@ import Component from '@zippytech/react-class'
 
 import raf from 'raf'
 
-import moment from 'moment'
 import assign from 'object-assign'
 
-import toMoment from '../toMoment'
-import join from '../join'
 import Clock from '../Clock'
-
-import {Flex, Item} from '@zippytech/react-flex'
 
 import getSelectionStart from './getSelectionStart'
 import getSelectionEnd from './getSelectionEnd'
 import setCaretPosition from './setCaretPosition'
 import getNewValue from './getNewValue'
-import toTimeValue from './toTimeValue'
 
 export {
   getSelectionStart,
   getSelectionEnd,
 
   getNewValue,
-  setCaretPosition,
-  toTimeValue
+  setCaretPosition
 }
 
 export default class TimeInput extends Component {
@@ -95,8 +88,6 @@ export default class TimeInput extends Component {
 
   onKeyDown (event) {
     const value = this.p.value
-
-    const valueRange = this.state.valueRange
 
     if (this.props.onKeyDown) {
       this.props.onKeyDown(event)
@@ -182,10 +173,6 @@ export default class TimeInput extends Component {
     const value = this.p.value
 
     return value.substring(range.start, range.end)
-  }
-
-  onChange (event) {
-    const value = event.target.value
   }
 
   onTimeChange (value) {
