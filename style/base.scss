@@ -118,5 +118,5 @@
   }
 }
 
-// @import '~react-flex/index.scss'; // - avoid css-loader specific syntax for now - see https://github.com/zippyui/react-date-picker/issues/92
-@import '../node_modules/react-flex/index.scss';
+// @import '~@zippytech/react-flex/index.scss'; // - avoid css-loader specific syntax for now - see https://github.com/zippyui/react-date-picker/issues/92
+@import '../node_modules/@zippytech/react-flex/index.scss';

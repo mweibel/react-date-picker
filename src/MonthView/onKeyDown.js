@@ -1,6 +1,6 @@
 import NAV_KEYS from './navKeys'
 
-export default function(event) {
+export default function (event) {
   const key = event.key
 
   if (this.props.onKeyDown) {

@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
-import { Flex, Item } from 'react-flex'
-import InlineBlock from 'react-inline-block'
+import { Flex, Item } from '@zippytech/react-flex'
 
 import assign from 'object-assign'
 
@@ -19,9 +18,9 @@ const buttonClassName = 'react-date-picker__footer-button'
 const preventDefault = e => e.preventDefault()
 
 export const Button = (props) => {
-  const disabledClassName = props.disabled ?
-    `${buttonClassName}--disabled` :
-    ''
+  const disabledClassName = props.disabled
+    ? `${buttonClassName}--disabled`
+    : ''
 
   const className = `${props.className || ''} ${buttonClassName} ${disabledClassName}`
   return <button
@@ -32,8 +31,7 @@ export const Button = (props) => {
 }
 
 export default class Footer extends Component {
-
-  render() {
+  render () {
     const props = this.p = assign({}, this.props)
 
     const className = join(props.className, bem(), bem(null, `theme-${props.theme}`))
@@ -50,9 +48,9 @@ export default class Footer extends Component {
 
     const middleSpacer = (okButton || cancelButton) ? SPACER : null
 
-    const spacer = !props.centerButtons ?
-      middleSpacer :
-      null
+    const spacer = !props.centerButtons
+      ? middleSpacer
+      : null
 
     let children = [
       props.centerButtons && SPACER,
@@ -94,7 +92,7 @@ export default class Footer extends Component {
     delete flexProps.todayButton
     delete flexProps.todayButtonText
 
-    if (typeof props.cleanup == 'function') {
+    if (typeof props.cleanup === 'function') {
       props.cleanup(flexProps)
     }
 
@@ -102,20 +100,20 @@ export default class Footer extends Component {
       inline
       row
       {...flexProps}
-      justifyContent="center"
+      justifyContent='center'
       className={className}
       children={children}
     />
   }
 
-  renderTodayButton() {
+  renderTodayButton () {
     if (!this.props.todayButton) {
       return null
     }
     return this.renderButton(this.props.todayButtonText, this.props.onTodayClick)
   }
 
-  renderClearButton() {
+  renderClearButton () {
     if (!this.props.clearButton) {
       return null
     }
@@ -126,38 +124,38 @@ export default class Footer extends Component {
     }, this.props.onClearClick)
   }
 
-  renderOkButton() {
+  renderOkButton () {
     if (!this.props.okButton) {
       return null
     }
     return this.renderButton(this.props.okButtonText, this.props.onOkClick)
   }
 
-  renderCancelButton() {
+  renderCancelButton () {
     if (!this.props.cancelButton) {
       return null
     }
     return this.renderButton(this.props.cancelButtonText, this.props.onCancelClick)
   }
 
-  renderButton(props, fn) {
+  renderButton (props, fn) {
     let text = props.children
     let p = props
 
-    if (typeof props == 'string') {
+    if (typeof props === 'string') {
       p = {}
       text = props
     }
 
-    if (typeof fn == 'function' && !p.onClick && !p.disabled) {
+    if (typeof fn === 'function' && !p.onClick && !p.disabled) {
       p.onClick = fn
     }
 
     const Factory = this.props.buttonFactory
 
-    const onMouseDown = p.onMouseDown ?
-      joinFunctions(p.onMouseDown, preventDefault) :
-      preventDefault
+    const onMouseDown = p.onMouseDown
+      ? joinFunctions(p.onMouseDown, preventDefault)
+      : preventDefault
 
     return <Factory tabIndex={0} {...p} onMouseDown={onMouseDown}>{text}</Factory>
   }
@@ -179,7 +177,7 @@ Footer.defaultProps = {
   okButtonText: 'OK',
   cancelButtonText: 'Cancel',
 
-  isDatePickerFooter: true,
+  isDatePickerFooter: true
 }
 
 Footer.propTypes = {

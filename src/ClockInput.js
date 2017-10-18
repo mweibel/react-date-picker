@@ -1,10 +1,10 @@
 import React from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import throttle from 'lodash.throttle'
 import assign from 'object-assign'
 
-import { Flex } from 'react-flex'
+import { Flex } from '@zippytech/react-flex'
 
 import join from './join'
 import toMoment from './toMoment'
@@ -13,8 +13,7 @@ import Clock from './Clock'
 import DateFormatSpinnerInput from './DateFormatSpinnerInput'
 
 export default class ClockInput extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     const delay = props.changeDelay
@@ -25,11 +24,11 @@ export default class ClockInput extends Component {
     }
   }
 
-  getValue() {
+  getValue () {
     return this.value
   }
 
-  render() {
+  render () {
     const props = this.props
     const format = props.dateFormat || props.format
 
@@ -59,7 +58,7 @@ export default class ClockInput extends Component {
     delete flexProps.viewIndex
     delete flexProps.wrapTime
 
-    if (typeof this.props.cleanup == 'function') {
+    if (typeof this.props.cleanup === 'function') {
       this.props.cleanup(flexProps)
     }
 
@@ -75,11 +74,11 @@ export default class ClockInput extends Component {
     </Flex>
   }
 
-  renderTimeInput() {
+  renderTimeInput () {
     const props = this.props
     const dateInput = React.Children
-                  .toArray(props.children)
-                  .filter(child => child && child.props && child.props.isDateInput)[0]
+      .toArray(props.children)
+      .filter(child => child && child.props && child.props.isDateInput)[0]
 
     const dateInputProps = assign({}, this.props, {
       ref: (field) => { this.field = field },
@@ -99,13 +98,13 @@ export default class ClockInput extends Component {
     return <DateFormatSpinnerInput {...dateInputProps} style={null} />
   }
 
-  focus() {
+  focus () {
     if (this.field) {
       this.field.focus()
     }
   }
 
-  onKeyDown(event) {
+  onKeyDown (event) {
     if (this.props.onEnterKey && event.key == 'Enter') {
       this.props.onEnterKey(event)
     }
@@ -115,7 +114,7 @@ export default class ClockInput extends Component {
     }
   }
 
-  onChange(value) {
+  onChange (value) {
     if (this.props.value === undefined) {
       this.setState({
         value
@@ -127,7 +126,7 @@ export default class ClockInput extends Component {
     }
   }
 
-  setValue(value) {
+  setValue (value) {
     if (this.props.value === undefined) {
       this.setState({
         value
@@ -139,11 +138,11 @@ export default class ClockInput extends Component {
     }
   }
 
-  renderClock() {
+  renderClock () {
     const props = this.props
     const clock = React.Children
-                  .toArray(props.children)
-                  .filter(child => child && child.props && child.props.isDatePickerClock)[0]
+      .toArray(props.children)
+      .filter(child => child && child.props && child.props.isDatePickerClock)[0]
 
     const dateFormat = this.dateFormat
     const time = toMoment(this.value, { dateFormat })

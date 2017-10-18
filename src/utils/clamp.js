@@ -1,9 +1,9 @@
 const clamp = (value, { min, max, circular = true }) => {
-  return value < min?
-    (circular? max: min):
-    value > max?
-      (circular? min: max):
-      value
+  return value < min
+    ? (circular ? max : min)
+    : value > max
+      ? (circular ? min : max)
+      : value
 }
 
 export const clampHour = (value, { max, min, circular }) => {

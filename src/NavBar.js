@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
-import { Flex, Item } from 'react-flex'
-import InlineBlock from 'react-inline-block'
+import { Flex, Item } from '@zippytech/react-flex'
 
 import assign from 'object-assign'
 import assignDefined from './assignDefined'
@@ -14,22 +13,21 @@ import bemFactory from './bemFactory'
 import HistoryView from './HistoryView'
 
 const ARROWS = {
-  prev: <svg height="24" viewBox="0 0 24 24" width="24">
-    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-    <path d="M0 0h24v24H0z" fill="none" />
+  prev: <svg height='24' viewBox='0 0 24 24' width='24'>
+    <path d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z' />
+    <path d='M0 0h24v24H0z' fill='none' />
   </svg>,
 
-  next: <svg height="24" viewBox="0 0 24 24" width="24">
-    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-    <path d="M0 0h24v24H0z" fill="none" />
+  next: <svg height='24' viewBox='0 0 24 24' width='24'>
+    <path d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' />
+    <path d='M0 0h24v24H0z' fill='none' />
   </svg>
 }
 
 const bem = bemFactory('react-date-picker__nav-bar')
 
 export default class NavBar extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -37,13 +35,13 @@ export default class NavBar extends Component {
     }
   }
 
-  prepareViewDate(props) {
-    return props.viewDate === undefined ?
-            this.state.viewDate :
-            props.viewDate
+  prepareViewDate (props) {
+    return props.viewDate === undefined
+      ? this.state.viewDate
+      : props.viewDate
   }
 
-  render() {
+  render () {
     const props = this.p = assign({}, this.props)
 
     const viewMoment = props.viewMoment = props.viewMoment || this.toMoment(
@@ -85,7 +83,7 @@ export default class NavBar extends Component {
     delete flexProps.viewDate
     delete flexProps.viewMoment
 
-    if (typeof props.cleanup == 'function') {
+    if (typeof props.cleanup === 'function') {
       props.cleanup(flexProps)
     }
 
@@ -109,7 +107,7 @@ export default class NavBar extends Component {
     </Flex>
   }
 
-  renderHistoryView() {
+  renderHistoryView () {
     if (!this.state.historyView) {
       return null
     }
@@ -143,7 +141,7 @@ export default class NavBar extends Component {
     />
   }
 
-  toggleHistoryView(event) {
+  toggleHistoryView (event) {
     if (this.isHistoryViewVisible()) {
       this.hideHistoryView(event)
     } else {
@@ -151,24 +149,24 @@ export default class NavBar extends Component {
     }
   }
 
-  getHistoryView() {
+  getHistoryView () {
     return this.historyView
   }
 
-  isHistoryViewVisible() {
+  isHistoryViewVisible () {
     return !!this.historyView
   }
 
-  onHistoryViewOk(dateString, { dateMoment, timestamp }) {
+  onHistoryViewOk (dateString, { dateMoment, timestamp }) {
     this.hideHistoryView()
     this.onViewDateChange({ dateMoment, timestamp })
   }
 
-  onHistoryViewCancel() {
+  onHistoryViewCancel () {
     this.hideHistoryView()
   }
 
-  showHistoryView(event) {
+  showHistoryView (event) {
     event.preventDefault()
 
     this.setState({
@@ -180,9 +178,9 @@ export default class NavBar extends Component {
     }
   }
 
-  hideHistoryView(event) {
+  hideHistoryView (event) {
     if (event && event.preventDefault) {
-        event.preventDefault()
+      event.preventDefault()
     }
 
     this.setState({
@@ -194,7 +192,7 @@ export default class NavBar extends Component {
     }
   }
 
-  toMoment(value, props) {
+  toMoment (value, props) {
     props = props || this.props
 
     return toMoment(value, {
@@ -203,7 +201,7 @@ export default class NavBar extends Component {
     })
   }
 
-  renderNav(dir, viewMoment) {
+  renderNav (dir, viewMoment) {
     const props = this.p
 
     const name = dir < 0 ? 'prev' : 'next'
@@ -247,7 +245,7 @@ export default class NavBar extends Component {
       if (dirArrow) {
         children = dirArrow
       } else {
-        const secondArrow = <InlineBlock style={{ position: 'absolute', [dir < 0 ? 'left' : 'left']: 7 }}>{arrow}</InlineBlock>
+        const secondArrow = <div style={{ display: 'inline-block', position: 'absolute', [dir < 0 ? 'left' : 'left']: 7 }}>{arrow}</div>
         children = dir < 0 ? [secondArrow, arrow] : [secondArrow, arrow]
       }
     } else {
@@ -275,14 +273,15 @@ export default class NavBar extends Component {
       return props.renderNavNext(navProps)
     }
 
-    return <InlineBlock
+    return <div
       {...navProps}
       disabled={null}
       name={null}
+      style={{ display: 'inline-block' }}
     />
   }
 
-  getGotoMoment(dir, viewMoment) {
+  getGotoMoment (dir, viewMoment) {
     viewMoment = viewMoment || this.p.viewMoment
 
     const sign = dir < 0 ? -1 : 1
@@ -295,7 +294,7 @@ export default class NavBar extends Component {
     return mom
   }
 
-  onNavClick(dir, viewMoment, event) {
+  onNavClick (dir, viewMoment, event) {
     const props = this.props
 
     let dateMoment = this.toMoment(viewMoment)
@@ -325,7 +324,7 @@ export default class NavBar extends Component {
     })
   }
 
-  renderNavDate(viewMoment) {
+  renderNavDate (viewMoment) {
     const props = this.props
     const text = viewMoment.format(props.navDateFormat)
 
@@ -336,7 +335,7 @@ export default class NavBar extends Component {
     return text
   }
 
-  onViewDateChange({ dateMoment, timestamp }) {
+  onViewDateChange ({ dateMoment, timestamp }) {
     if (this.props.viewDate === undefined) {
       this.setState({
         viewDate: timestamp
@@ -348,7 +347,6 @@ export default class NavBar extends Component {
       this.props.onViewDateChange(dateString, { dateString, dateMoment, timestamp })
     }
   }
-
 }
 
 NavBar.defaultProps = {

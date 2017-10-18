@@ -1,14 +1,14 @@
-export default function setCaretPosition(elem, caretPos) {
+export default function setCaretPosition (elem, caretPos) {
   let start = caretPos
   let end = caretPos
 
-  if (caretPos && (caretPos.start != undefined || caretPos.end != undefined)){
+  if (caretPos && (caretPos.start != undefined || caretPos.end != undefined)) {
     start = caretPos.start || 0
     end = caretPos.end || start
   }
 
   if (elem != null) {
-    if(elem.createTextRange) {
+    if (elem.createTextRange) {
       var range = elem.createTextRange()
       range.moveStart('character', start)
       range.moveEnd('character', end)

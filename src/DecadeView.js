@@ -1,9 +1,9 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import assign from 'object-assign'
-import { Flex, Item } from 'react-flex'
+import { Flex, Item } from '@zippytech/react-flex'
 import moment from 'moment'
 
 import times from './utils/times'
@@ -14,14 +14,14 @@ import bemFactory from './bemFactory'
 const bem = bemFactory('react-date-picker__decade-view')
 
 const ARROWS = {
-  prev: <svg height="24" viewBox="0 0 24 24" width="24">
-    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-    <path d="M0 0h24v24H0z" fill="none" />
+  prev: <svg height='24' viewBox='0 0 24 24' width='24'>
+    <path d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z' />
+    <path d='M0 0h24v24H0z' fill='none' />
   </svg>,
 
-  next: <svg height="24" viewBox="0 0 24 24" width="24">
-    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-    <path d="M0 0h24v24H0z" fill="none" />
+  next: <svg height='24' viewBox='0 0 24 24' width='24'>
+    <path d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' />
+    <path d='M0 0h24v24H0z' fill='none' />
   </svg>
 }
 
@@ -38,28 +38,28 @@ const getDecadeEndYear = (mom) => {
 }
 
 const NAV_KEYS = {
-  ArrowUp(mom) {
+  ArrowUp (mom) {
     return mom.add(-5, 'year')
   },
-  ArrowDown(mom) {
+  ArrowDown (mom) {
     return mom.add(5, 'year')
   },
-  ArrowLeft(mom) {
+  ArrowLeft (mom) {
     return mom.add(-1, 'year')
   },
-  ArrowRight(mom) {
+  ArrowRight (mom) {
     return mom.add(1, 'year')
   },
-  Home(mom) {
+  Home (mom) {
     return mom.set('year', getDecadeStartYear(mom))
   },
-  End(mom) {
+  End (mom) {
     return mom.set('year', getDecadeEndYear(mom))
   },
-  PageUp(mom) {
+  PageUp (mom) {
     return mom.add(-10, 'year')
   },
-  PageDown(mom) {
+  PageDown (mom) {
     return mom.add(10, 'year')
   }
 }
@@ -175,7 +175,7 @@ const navigate = function (direction, event) {
   const getNavigationDate = (dir, date, dateFormat) => {
     const mom = moment.isMoment(date) ? date : this.toMoment(date, dateFormat)
 
-    if (typeof dir == 'function') {
+    if (typeof dir === 'function') {
       return dir(mom)
     }
 
@@ -207,15 +207,15 @@ const gotoViewDate = function ({ dateMoment, timestamp }) {
 }
 
 const prepareDate = function (props, state) {
-  return props.date === undefined ?
-          state.date :
-          props.date
+  return props.date === undefined
+    ? state.date
+    : props.date
 }
 
 const prepareViewDate = function (props, state) {
-  const viewDate = props.viewDate === undefined ?
-        state.viewDate :
-        props.viewDate
+  const viewDate = props.viewDate === undefined
+    ? state.viewDate
+    : props.viewDate
 
   if (!viewDate && props.date) {
     return props.date
@@ -225,9 +225,9 @@ const prepareViewDate = function (props, state) {
 }
 
 const prepareActiveDate = function (props, state) {
-  const activeDate = props.activeDate === undefined ?
-    state.activeDate || prepareDate(props, state) :
-    props.activeDate
+  const activeDate = props.activeDate === undefined
+    ? state.activeDate || prepareDate(props, state)
+    : props.activeDate
 
   return activeDate
 }
@@ -320,14 +320,13 @@ const getInitialState = (props) => {
 }
 
 export default class DecadeView extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = getInitialState(props)
   }
 
-  getYearsInDecade(value) {
+  getYearsInDecade (value) {
     const year = getDecadeStartYear(this.toMoment(value))
 
     const start = this.toMoment(`${year}`, 'YYYY').startOf('year')
@@ -337,11 +336,11 @@ export default class DecadeView extends Component {
     })
   }
 
-  toMoment(date, format) {
+  toMoment (date, format) {
     return toMoment(date, format, this.props)
   }
 
-  render() {
+  render () {
     const props = this.p = assign({}, this.props)
 
     if (props.onlyCompareYear) {
@@ -370,7 +369,7 @@ export default class DecadeView extends Component {
 
       children = [
         this.renderNav(-1),
-        <Flex inline flex column alignItems="stretch" children={children} />,
+        <Flex inline flex column alignItems='stretch' children={children} />,
         this.renderNav(1)
       ]
     }
@@ -400,7 +399,7 @@ export default class DecadeView extends Component {
     delete flexProps.viewDate
     delete flexProps.yearFormat
 
-    if (typeof props.cleanup == 'function') {
+    if (typeof props.cleanup === 'function') {
       props.cleanup(flexProps)
     }
 
@@ -416,15 +415,15 @@ export default class DecadeView extends Component {
     />
   }
 
-  renderNav(dir) {
+  renderNav (dir) {
     const props = this.p
 
     const name = dir == -1 ? 'prev' : 'next'
     const navMoment = this.toMoment(props.viewMoment).add(dir * 10, 'year')
 
-    const disabled = dir == -1 ?
-      props.minDateMoment && getDecadeEndYear(navMoment) < getDecadeEndYear(props.minDateMoment) :
-      props.maxDateMoment && getDecadeEndYear(navMoment) > getDecadeEndYear(props.maxDateMoment)
+    const disabled = dir == -1
+      ? props.minDateMoment && getDecadeEndYear(navMoment) < getDecadeEndYear(props.minDateMoment)
+      : props.maxDateMoment && getDecadeEndYear(navMoment) > getDecadeEndYear(props.maxDateMoment)
 
     const className = join(
       bem('arrow'),
@@ -448,7 +447,7 @@ export default class DecadeView extends Component {
     return <div {...arrowProps} />
   }
 
-  renderYears(props, years) {
+  renderYears (props, years) {
     const nodes = years.map(this.renderYear)
 
     const perRow = props.perRow
@@ -457,30 +456,30 @@ export default class DecadeView extends Component {
     })
 
     return buckets.map((bucket, i) => <Flex
-      alignItems="center"
+      alignItems='center'
       flex
       row
       inline
       key={`row_${i}`}
-      className="dp-row"
+      className='dp-row'
     >
       {bucket}
     </Flex>)
   }
 
-  renderYear(dateMoment) {
+  renderYear (dateMoment) {
     const props = this.p
     const yearText = this.format(dateMoment)
 
     const timestamp = +dateMoment
 
-    const isActiveDate = props.onlyCompareYear && props.activeMoment ?
-      dateMoment.get('year') == props.activeMoment.get('year') :
-      timestamp === props.activeDate
+    const isActiveDate = props.onlyCompareYear && props.activeMoment
+      ? dateMoment.get('year') == props.activeMoment.get('year')
+      : timestamp === props.activeDate
 
-    const isValue = props.onlyCompareYear && props.moment ?
-      dateMoment.get('year') == props.moment.get('year') :
-      timestamp === props.timestamp
+    const isValue = props.onlyCompareYear && props.moment
+      ? dateMoment.get('year') == props.moment.get('year')
+      : timestamp === props.timestamp
 
     const className = join(
       bem('year'),
@@ -504,13 +503,13 @@ export default class DecadeView extends Component {
     </Item>
   }
 
-  format(mom, format) {
+  format (mom, format) {
     format = format || this.props.yearFormat
 
     return mom.format(format)
   }
 
-  handleClick({ timestamp, dateMoment }, event) {
+  handleClick ({ timestamp, dateMoment }, event) {
     event.target.value = timestamp
 
     const props = this.p
@@ -525,39 +524,39 @@ export default class DecadeView extends Component {
     this.select({ dateMoment, timestamp }, event)
   }
 
-  onKeyDown(event) {
+  onKeyDown (event) {
     return ON_KEY_DOWN.call(this, event)
   }
 
-  confirm(date, event) {
+  confirm (date, event) {
     return confirm.call(this, date, event)
   }
 
-  navigate(direction, event) {
+  navigate (direction, event) {
     return navigate.call(this, direction, event)
   }
 
-  select({ dateMoment, timestamp }, event) {
+  select ({ dateMoment, timestamp }, event) {
     return select.call(this, { dateMoment, timestamp }, event)
   }
 
-  onViewDateChange({ dateMoment, timestamp }) {
+  onViewDateChange ({ dateMoment, timestamp }) {
     return onViewDateChange.call(this, { dateMoment, timestamp })
   }
 
-  gotoViewDate({ dateMoment, timestamp }) {
+  gotoViewDate ({ dateMoment, timestamp }) {
     return gotoViewDate.call(this, { dateMoment, timestamp })
   }
 
-  onActiveDateChange({ dateMoment, timestamp }) {
+  onActiveDateChange ({ dateMoment, timestamp }) {
     return onActiveDateChange.call(this, { dateMoment, timestamp })
   }
 
-  onChange({ dateMoment, timestamp }, event) {
+  onChange ({ dateMoment, timestamp }, event) {
     return onChange.call(this, { dateMoment, timestamp }, event)
   }
 
-  focus() {
+  focus () {
     findDOMNode(this).focus()
   }
 }

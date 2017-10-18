@@ -1,68 +1,59 @@
 import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
-import Component from 'react-class'
+import Component from '@zippytech/react-class'
 
 import raf from 'raf'
 
-import moment from 'moment'
 import assign from 'object-assign'
 
-import toMoment from '../toMoment'
-import join from '../join'
 import Clock from '../Clock'
-
-import {Flex, Item} from 'react-flex'
 
 import getSelectionStart from './getSelectionStart'
 import getSelectionEnd from './getSelectionEnd'
 import setCaretPosition from './setCaretPosition'
 import getNewValue from './getNewValue'
-import toTimeValue from './toTimeValue'
 
 export {
   getSelectionStart,
   getSelectionEnd,
 
   getNewValue,
-  setCaretPosition,
-  toTimeValue
+  setCaretPosition
 }
 
 export default class TimeInput extends Component {
-
-  constructor(props){
+  constructor (props) {
     super(props)
 
     const format = props.format || props.timeFormat
 
-    if (format.indexOf('hh') != 0 && format.indexOf('HH') != 0){
+    if (format.indexOf('hh') != 0 && format.indexOf('HH') != 0) {
       console.warn('Please start your time format with 2 digit hours.')
     }
 
     let hours24 = true
     let meridiem = format.indexOf('a') != -1 || format.indexOf('A') != -1
 
-    if (format.indexOf('hh') == 0){
+    if (format.indexOf('hh') == 0) {
       hours24 = false
     }
 
     const separator = props.separator ||
-                        format && format.length > 2?
-                          format.charAt(2)
-                          :
-                          ':'
+                        format && format.length > 2
+      ? format.charAt(2)
+      : ':'
     const hasSeconds = format.indexOf('ss') != -1
 
-    if (hasSeconds && format.charAt(5) != separator){
+    if (hasSeconds && format.charAt(5) != separator) {
       console.warn('Expected minutes-seconds separator to be same as hours-minutes separator. (at position 5)')
     }
 
     let defaultValue = '00' + separator + '00'
 
-    if (hasSeconds){
+    if (hasSeconds) {
       defaultValue += separator + '00'
     }
-    if (meridiem){
+    if (meridiem) {
       defaultValue += ' am'
     }
 
@@ -75,34 +66,30 @@ export default class TimeInput extends Component {
     }
   }
 
-  render(){
-
+  render () {
     const props = this.p = assign({}, this.props)
 
-    props.value = this.state.value //props.value !== undefined?
-                    // props.value:
-                    // this.state.value
+    props.value = this.state.value // props.value !== undefined?
+    // props.value:
+    // this.state.value
 
     return <input
-        {...props}
-        defaultValue={undefined}
-        value={props.value}
-        onKeyDown={this.onKeyDown}
-        onChange={this.onChange}
-      />
+      {...props}
+      defaultValue={undefined}
+      value={props.value}
+      onKeyDown={this.onKeyDown}
+      onChange={this.onChange}
+    />
   }
 
-  onChange(event){
+  onChange (event) {
     event.stopPropagation()
   }
 
-  onKeyDown(event){
-
+  onKeyDown (event) {
     const value = this.p.value
 
-    const valueRange = this.state.valueRange
-
-    if (this.props.onKeyDown){
+    if (this.props.onKeyDown) {
       this.props.onKeyDown(event)
     }
 
@@ -125,74 +112,70 @@ export default class TimeInput extends Component {
     })
 
     const updateCaretPos = () => {
-      if (caretPos != undefined){
+      if (caretPos != undefined) {
         this.setCaretPosition(caretPos)
       }
     }
 
-    if (update || caretPos){
+    if (update || caretPos) {
       event.preventDefault()
     }
 
-    if (update){
+    if (update) {
       this.setValue(newValue, updateCaretPos)
     } else {
       raf(updateCaretPos)
     }
   }
 
-  getInput(){
+  getInput () {
     return findDOMNode(this)
   }
 
-  setCaretPosition(pos){
+  setCaretPosition (pos) {
     const dom = this.getInput()
     dom && setCaretPosition(dom, pos)
   }
 
-  setValue(value, callback){
+  setValue (value, callback) {
     // if (this.props.value === undefined){
-      this.setState({
-        now: Date.now(),
-        value
-      }, typeof callback == 'function' && callback)
+    this.setState({
+      now: Date.now(),
+      value
+    }, typeof callback === 'function' && callback)
     // } else {
     //   this.updateCallback = callback
     // }
 
-    if (this.props.onChange){
+    if (this.props.onChange) {
       this.props.onChange(value)
     }
   }
 
-  componentDidUpdate(){
-    if (this.updateCallback){
+  componentDidUpdate () {
+    if (this.updateCallback) {
       this.updateCallback()
       this.updateCallback = null
     }
   }
 
-  getSelectedRange(){
+  getSelectedRange () {
     const dom = this.getInput()
 
     return {
       start: getSelectionStart(dom),
-      end  : getSelectionEnd(dom)
+      end: getSelectionEnd(dom)
     }
   }
 
-  getSelectedValue(){
+  getSelectedValue () {
     const range = this.getSelectedRange()
     const value = this.p.value
 
     return value.substring(range.start, range.end)
   }
 
-  onChange(event){
-    const value = event.target.value
-  }
-
-  onTimeChange(value){
+  onTimeChange (value) {
     const time = value.split(':')
 
     this.setState({
@@ -200,18 +183,17 @@ export default class TimeInput extends Component {
     })
   }
 
-  renderClock(){
-
+  renderClock () {
     const props = this.p
     const clock = props.children
-                  .filter(child => child && child.props && child.props.isTimePickerClock)[0]
+      .filter(child => child && child.props && child.props.isTimePickerClock)[0]
 
     const clockProps = {
       time: this.state.minutes || props.date,
       showSecondsHand: true
     }
 
-    if (clock){
+    if (clock) {
       return React.cloneElement(clock, clockProps)
     }
 
@@ -230,7 +212,7 @@ TimeInput.defaultProps = {
 TimeInput.propTypes = {
   format: PropTypes.string,
   value: (props, propName) => {
-    if (props[propName] !== undefined){
+    if (props[propName] !== undefined) {
       console.warn('Due to performance considerations, TimeInput will only be uncontrolled.')
     }
   }

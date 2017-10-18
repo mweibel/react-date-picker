@@ -9,7 +9,7 @@ export default ({ value, separator = ':', meridiem }) => {
 
   const result = { hours, minutes }
 
-  if (typeof seconds == 'string' && seconds.length) {
+  if (typeof seconds === 'string' && seconds.length) {
     result.seconds = seconds
   }
 
