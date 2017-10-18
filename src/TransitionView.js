@@ -15,10 +15,9 @@ import NavBar from './NavBar'
 import { Flex } from '@zippytech/react-flex'
 import times from './utils/times'
 
-import InlineBlock from 'react-inline-block'
 import normalize from 'react-style-normalizer'
 
-const renderHiddenNav = (props) => <InlineBlock {...props} style={{visibility: 'hidden'}} />
+const renderHiddenNav = (props) => <div {...props} style={{visibility: 'hidden', display: 'inline-block'}} />
 
 const joinFunctions = (a, b) => {
   if (a && b) {

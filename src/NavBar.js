@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import Component from '@zippytech/react-class'
 
 import { Flex, Item } from '@zippytech/react-flex'
-import InlineBlock from 'react-inline-block'
 
 import assign from 'object-assign'
 import assignDefined from './assignDefined'
@@ -246,7 +245,7 @@ export default class NavBar extends Component {
       if (dirArrow) {
         children = dirArrow
       } else {
-        const secondArrow = <InlineBlock style={{ position: 'absolute', [dir < 0 ? 'left' : 'left']: 7 }}>{arrow}</InlineBlock>
+        const secondArrow = <div style={{ display: 'inline-block', position: 'absolute', [dir < 0 ? 'left' : 'left']: 7 }}>{arrow}</div>
         children = dir < 0 ? [secondArrow, arrow] : [secondArrow, arrow]
       }
     } else {
@@ -274,10 +273,11 @@ export default class NavBar extends Component {
       return props.renderNavNext(navProps)
     }
 
-    return <InlineBlock
+    return <div
       {...navProps}
       disabled={null}
       name={null}
+      style={{ display: 'inline-block' }}
     />
   }
 

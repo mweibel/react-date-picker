@@ -7,8 +7,6 @@ import { Flex } from '@zippytech/react-flex'
 import Input from 'react-field'
 import DateFormatInput from '../DateFormatInput'
 
-import InlineBlock from 'react-inline-block'
-
 import { CLEAR_ICON } from './icons'
 import moment from 'moment'
 import join from '../join'
@@ -159,7 +157,7 @@ export default class DateField extends Component {
     }
 
     if (result === undefined) {
-      result = <InlineBlock {...clearIconProps} />
+      result = <div style={{display: 'inline-block'}} {...clearIconProps} />
     }
 
     return result

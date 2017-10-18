@@ -2,7 +2,6 @@ import React from 'react'
 import Component from '@zippytech/react-class'
 
 import { Flex } from '@zippytech/react-flex'
-import InlineBlock from 'react-inline-block'
 
 import assign from 'object-assign'
 
@@ -515,7 +514,7 @@ export default class MultiMonthView extends Component {
   }
 
   renderHiddenNav (props) {
-    return <InlineBlock {...props} style={{ visibility: 'hidden' }} />
+    return <div {...props} style={{ visibility: 'hidden', display: 'inline-block' }} />
   }
 
   isInRange (moment) {
